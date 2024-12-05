@@ -18,6 +18,8 @@ class Watchlist(db.Model):
     added_on = db.Column(db.DateTime, default=datetime.utcnow)
     watched = db.Column(db.Boolean, default=False)
 
+    user = db.relationship('User', back_populates='watchlist')
+
     @staticmethod
     def add_to_watchlist(username: str, movie_title: str) -> None:
         user = Users.query.filter_by(username=username).first()

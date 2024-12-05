@@ -19,7 +19,8 @@ class Users(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     salt = db.Column(db.String(32), nullable=False)  # 16-byte salt in hex
     password = db.Column(db.String(64), nullable=False)  # SHA-256 hash in hex
-    watchlist = db.Column(db.Text, nullable=True)  # Store watchlist as JSON string
+    
+    watchlist = db.relationship('Watchlist', back_populates='user', cascade='all, delete-orphan')
 
 
     @classmethod
