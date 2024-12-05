@@ -1,12 +1,10 @@
-DROP TABLE IF EXISTS songs;
-CREATE TABLE songs (
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    artist TEXT NOT NULL,
-    title TEXT NOT NULL,
-    year INTEGER NOT NULL CHECK(year >= 1900),
-    genre TEXT NOT NULL,
-    duration INTEGER NOT NULL CHECK(duration > 0),
-    play_count INTEGER DEFAULT 0,
+    username TEXT NOT NULL UNIQUE,
+    hashed_password TEXT NOT NULL,
+    salt TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     deleted BOOLEAN DEFAULT FALSE,
-    UNIQUE(artist, title, year)
+    
 );
