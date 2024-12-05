@@ -58,6 +58,85 @@ def db_check() -> Response:
     except Exception as e:
         return make_response(jsonify({'error': str(e)}), 404)
 
+##########################################################
+#
+# Watch list
+#
+##########################################################
+
+@app.route('/add-to-watchlist', methods=['POST'])
+def add_to_watchlist():
+    data = request.json
+    user_id = data['user_id']
+    movie_id = data['movie_id']
+
+    # Check if the movie is already in the watchlist
+    existing_entry = Watchlist.query.filter_by(user_id=user_id, movie_id=movie_id).first()
+    if existing_entry:
+        return jsonify({"message": "Movie is already in your watchlist!"}), 400
+
+    # Add the movie to the watchlist
+    watchlist_entry = Watchlist(user_id=user_id, movie_id=movie_id)
+    db.session.add(watchlist_entry)
+    db.session.commit()
+
+    return jsonify({"message": "Movie added to watchlist!"}), 201
+
+
+@app.route('/get-watchlist/<int:user_id>', methods=['GET'])
+def get_watchlist(user_id):
+    watchlist = Watchlist.query.filter_by(user_id=user_id).all()
+    movie_details = []
+
+    # Fetch movie details from the database or TMDB API
+    for entry in watchlist:
+        movie = Movies.query.filter_by(id=entry.movie_id).first()  # Or use TMDB API
+        movie_details.append({
+            "movie_id": entry.movie_id,
+            "title": movie.title,
+            "release_date": movie.release_date,
+            "poster_path": movie.poster_path,
+            "watched": entry.watched
+        })
+
+    return jsonify(movie_details), 200
+
+@app.route('/mark-watched', methods=['PUT'])
+def mark_watched():
+    data = request.json
+    user_id = data['user_id']
+    movie_id = data['movie_id']
+
+    # Find the movie in the watchlist
+    watchlist_entry = Watchlist.query.filter_by(user_id=user_id, movie_id=movie_id).first()
+    if not watchlist_entry:
+        return jsonify({"message": "Movie not found in watchlist!"}), 404
+
+    # Mark it as watched
+    watchlist_entry.watched = True
+    db.session.commit()
+
+    return jsonify({"message": "Movie marked as watched!"}), 200
+
+@app.route('/remove-from-watchlist', methods=['DELETE'])
+def remove_from_watchlist():
+    data = request.json
+    user_id = data['user_id']
+    movie_id = data['movie_id']
+
+    # Find the movie in the watchlist
+    watchlist_entry = Watchlist.query.filter_by(user_id=user_id, movie_id=movie_id).first()
+    if not watchlist_entry:
+        return jsonify({"message": "Movie not found in watchlist!"}), 404
+
+    # Remove it from the watchlist
+    db.session.delete(watchlist_entry)
+    db.session.commit()
+
+    return jsonify({"message": "Movie removed from watchlist!"}), 200
+
+
+
 
 ##########################################################
 #

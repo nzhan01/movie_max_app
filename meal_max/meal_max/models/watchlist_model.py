@@ -2,6 +2,8 @@ import json
 import logging
 from sqlalchemy.exc import IntegrityError
 from db import db
+from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
 from user_model import Users
 from utils import configure_logger
 
@@ -9,7 +11,19 @@ logger = logging.getLogger(__name__)
 configure_logger(logger)
 
 
-class WatchlistManager:
+class WatchlistManager(db.Model):
+
+
+    __tablename__ = 'watchlist'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    movie_id = db.Column(db.Integer, db.ForeignKey('movies.id'), nullable=False)
+    added_on = db.Column(db.DateTime, default=datetime.utcnow)
+    watched = db.Column(db.Boolean, default=False)
+
+    #def __repr__(self):
+       # return f'<Watchlist {self.user_id} - {self.movie_id}>'
+
     @staticmethod
     def add_to_watchlist(username: str, movie: dict) -> None:
         user = Users.query.filter_by(username=username).first()
