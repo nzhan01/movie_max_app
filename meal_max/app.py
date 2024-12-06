@@ -253,14 +253,35 @@ def search_movie(query):
         return jsonify({"error": "API key not configured"}), 500
 
     url = f"{BASE_URL}/search/movie"
+    headers = {
+    "accept": "application/json",
+        "Authorization": f"Bearer {TMDB_READ_ACCESS_TOKEN}"
+    }
     params = {
-        "api_key": TMDB_API_KEY,  # Change: Use the API key from .env
-        "query": query
+        "query": query,
+        "include_adult": "false",
+        "language": "en-US",
+        "page": 1
     }
     try:
-        response = requests.get(url, params=params)  # Change: Perform API request
-        response.raise_for_status()
-        return response.json()  # Return TMDB API response as JSON
+        response = requests.get(url, headers=headers, params=params)  # API request
+        response.raise_for_status()  # Raise HTTP errors, if any
+        data = response.json()
+
+        # Filter the results to include only required fields
+        filtered_results = [
+            {
+                "title": movie.get("title"),
+                "release_date": movie.get("release_date"),
+                "overview": movie.get("overview"),
+                "vote_average": movie.get("vote_average")
+            }
+            for movie in data.get("results", [])
+        ]
+
+        # Return filtered results
+        return jsonify(filtered_results)
+    
     except requests.exceptions.RequestException as e:
         app.logger.error(f"Error calling TMDB API: {e}")
         return jsonify({"error": "Failed to fetch movie data"}), 500
