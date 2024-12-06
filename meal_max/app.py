@@ -2,6 +2,8 @@ from dotenv import load_dotenv
 import os
 from flask import Flask, jsonify, make_response, Response, request
 from werkzeug.exceptions import BadRequest, Unauthorized
+
+import requests
 # from flask_cors import CORS
 
 from meal_max.db import db
@@ -226,7 +228,42 @@ def logout():
         app.logger.error("Error during logout for username %s: %s", username, str(e))
         return jsonify({"error": "An unexpected error occurred."}), 500
 
+##########################################################
 
+#
+# API calls for getting movies
+#
+##########################################################
+
+BASE_URL = "https://api.themoviedb.org/3"  # Base URL for TMDB API
+
+@app.route('/api/search-movie/<string:query>', methods=['GET'])
+def search_movie(query):
+    """
+    Search for a movie using the TMDB API.
+
+    Args:
+        query (str): The search query for the movie.
+
+    Returns:
+        JSON response with movie search results or an error message.
+    """
+    if not TMDB_API_KEY:  # Change: Validate API key existence
+        app.logger.error("TMDB API key not found.")
+        return jsonify({"error": "API key not configured"}), 500
+
+    url = f"{BASE_URL}/search/movie"
+    params = {
+        "api_key": TMDB_API_KEY,  # Change: Use the API key from .env
+        "query": query
+    }
+    try:
+        response = requests.get(url, params=params)  # Change: Perform API request
+        response.raise_for_status()
+        return response.json()  # Return TMDB API response as JSON
+    except requests.exceptions.RequestException as e:
+        app.logger.error(f"Error calling TMDB API: {e}")
+        return jsonify({"error": "Failed to fetch movie data"}), 500
 
 ##########################################################
 #
