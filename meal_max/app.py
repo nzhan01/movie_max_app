@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+import os
 from flask import Flask, jsonify, make_response, Response, request
 from werkzeug.exceptions import BadRequest, Unauthorized
 # from flask_cors import CORS
@@ -9,9 +10,14 @@ from meal_max.models.battle_model import BattleModel
 from meal_max.utils.sql_utils import check_database_connection, check_table_exists
 from meal_max.models.mongo_session_model import login_user, logout_user
 from meal_max.models.user_model import Users
+from meal_max.models.watchlist_model import Watchlist
 
 # Load environment variables from .env file
 load_dotenv()
+TMDB_API_KEY = os.getenv("TMDB_API_KEY")
+TMDB_READ_ACCESS_TOKEN = os.getenv("TMDB_READ_ACCESS_TOKEN")
+
+
 
 app = Flask(__name__)
 # This bypasses standard security stuff we'll talk about later
