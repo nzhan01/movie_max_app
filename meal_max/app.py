@@ -311,6 +311,46 @@ def add_to_watchlist():
     return jsonify({"message": "Movie added to watchlist!"}), 201
 
 
+
+@app.route('/add-to-watchlist', methods=['POST'])
+def add_to_watchlist():
+    data = request.json
+    user_id = data['user_id']
+    movie_id = data['movie_id']
+
+    # Validate if the movie exists on TMDB
+    url = f"{BASE_URL}/movie/{movie_id}"
+    headers = {
+        "accept": "application/json",
+        "Authorization": f"Bearer {TMDB_READ_ACCESS_TOKEN}"
+    }
+    response = requests.get(url, headers=headers)
+    
+    if response.status_code != 200:
+        return jsonify({"error": "Invalid movie ID"}), 400
+
+    movie_data = response.json()
+
+    # Check if the movie is already in the watchlist
+    existing_entry = Watchlist.query.filter_by(user_id=user_id, movie_id=movie_id).first()
+    if existing_entry:
+        return jsonify({"message": "Movie is already in your watchlist!"}), 400
+
+    # Add the movie to the watchlist
+    watchlist_entry = Watchlist(
+        user_id=user_id, 
+        movie_id=movie_id, 
+        title=movie_data.get('title'), 
+        overview=movie_data.get('overview'),
+        release_date=movie_data.get('release_date'), 
+        vote_average=movie_data.get('vote_average')
+    )
+    db.session.add(watchlist_entry)
+    db.session.commit()
+
+    return jsonify({"message": "Movie added to watchlist!"}), 201
+
+'''
 @app.route('/get-watchlist/<int:user_id>', methods=['GET'])
 def get_watchlist(user_id):
     watchlist = Watchlist.query.filter_by(user_id=user_id).all()
@@ -328,6 +368,7 @@ def get_watchlist(user_id):
         })
 
     return jsonify(movie_details), 200
+'''
 
 @app.route('/mark-watched', methods=['PUT'])
 def mark_watched():
