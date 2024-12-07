@@ -1,9 +1,9 @@
 import logging
 from sqlalchemy.exc import IntegrityError
-from db import db
+from meal_max.db import db
 from datetime import datetime
-from user_model import Users
-from utils import configure_logger
+from meal_max.models.user_model import Users
+from meal_max.utils.logger import configure_logger
 
 logger = logging.getLogger(__name__)
 configure_logger(logger)

@@ -291,7 +291,7 @@ def search_movie(query):
 # Watch list
 #
 ##########################################################
-
+'''
 @app.route('/add-to-watchlist', methods=['POST'])
 def add_to_watchlist():
     data = request.json
@@ -309,7 +309,7 @@ def add_to_watchlist():
     db.session.commit()
 
     return jsonify({"message": "Movie added to watchlist!"}), 201
-
+'''
 
 
 @app.route('/add-to-watchlist', methods=['POST'])
