@@ -32,6 +32,17 @@ battle_model = BattleModel()
 
 ####################################################
 #
+# Root routes
+#
+####################################################
+@app.route('/')
+def root():
+    return jsonify({"message": "Welcome to Meal Max!"}), 200
+@app.route('/api')
+def api_root():
+    return jsonify({"message": "Welcome to Meal Max API!"}), 200
+####################################################
+#
 # Healthchecks
 #
 ####################################################
