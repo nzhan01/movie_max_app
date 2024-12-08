@@ -6,6 +6,12 @@ from werkzeug.exceptions import BadRequest, Unauthorized
 import requests
 # from flask_cors import CORS
 
+"""test commeent  
+dsf
+dsf
+
+dsf
+"""
 from meal_max.db import db
 from meal_max.models import kitchen_model
 from meal_max.models.battle_model import BattleModel
