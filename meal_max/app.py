@@ -11,6 +11,7 @@ from meal_max.models import kitchen_model
 from meal_max.models.battle_model import BattleModel
 from meal_max.utils.sql_utils import check_database_connection, check_table_exists
 from meal_max.models.mongo_session_model import login_user, logout_user
+
 from meal_max.models.user_model import Users
 from meal_max.models.watchlist_model import Watchlist
 
