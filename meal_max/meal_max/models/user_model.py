@@ -55,11 +55,11 @@ class Users(db.Model):
         try:
             db.session.add(new_user)
             db.session.commit()
-            logger.info("User successfully added to the database: %s", username)
+            logger.info("User successfully added: %s", username)
         except IntegrityError:
             db.session.rollback()
             logger.error("Duplicate username: %s", username)
-            raise ValueError(f"User with username '{username}' already exists")
+            raise ValueError(f"User '{username}' already exists")
         except Exception as e:
             db.session.rollback()
             logger.error("Database error: %s", str(e))
