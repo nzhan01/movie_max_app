@@ -1,7 +1,7 @@
 .env
 
 meal_max_venv
-
+meal_max/db/__pycache__
 models.__pycache__
 utils.__pycache__
 tests.__pycache__
