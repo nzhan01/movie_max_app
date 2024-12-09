@@ -3,7 +3,7 @@ import logging
 import os
 import sqlite3
 
-from utils.logger import configure_logger
+from meal_max.utils.logger import configure_logger
 
 
 logger = logging.getLogger(__name__)
