@@ -19,7 +19,7 @@ class Watchlist(db.Model):
     overview = db.Column(db.Text, nullable = True)
     popularity = db.Column(db.Float, nullable=True)
     added_on = db.Column(db.DateTime, default=datetime.utcnow)
-    
+    watched = db.Column(db.Boolean, default=False)
 
     user = db.relationship('Users', back_populates='watchlist')
 
