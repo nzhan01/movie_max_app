@@ -4,7 +4,7 @@ from flask import Flask, app, jsonify, make_response, Response, request
 from werkzeug.exceptions import BadRequest, Unauthorized
 import requests
 
-from meal_max.meal_max.utils.logger import configure_logger
+from meal_max.utils.logger import configure_logger
 
 # from flask_cors import CORS
 
@@ -261,7 +261,6 @@ def logout():
 #
 ##########################################################
 
-BASE_URL = "https://api.themoviedb.org/3"  # Base URL for TMDB API
 
 @app.route('/api/search-movie/<string:query>', methods=['GET'])
 def search_movie(query):
@@ -424,6 +423,7 @@ def add_to_watchlist():
         overview=movie_data.get('overview'),
         release_date=movie_data.get('release_date'), 
         vote_average=movie_data.get('vote_average')
+        popularity=movie_data.get('popularity', 0.0)
     )
     db.session.add(watchlist_entry)
     db.session.commit()
