@@ -14,7 +14,9 @@ class Watchlist(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    movie_id = db.Column(db.Integer, nullable = False) #Used to get movie info from TMDB
     movie_title = db.Column(db.String(200), nullable=False)
+    overview = db.Column(db.Text, nullable = True)
     added_on = db.Column(db.DateTime, default=datetime.utcnow)
     watched = db.Column(db.Boolean, default=False)
 
@@ -68,3 +70,5 @@ class Watchlist(db.Model):
         db.session.commit()
         logger.info("Movie '%s' removed from %s's watchlist.", movie_title, username)
         return {"message": "Movie removed from watchlist", "movie_title": movie_title}
+    
+    
