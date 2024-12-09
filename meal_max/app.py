@@ -22,7 +22,7 @@ from meal_max.models.watchlist_model import Watchlist
 # Load environment variables from .env file
 load_dotenv()
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
-TMDB_READ_ACCESS_TOKEN = os.getenv("TMDB_READ_ACCESS_TOKEN")
+
 
 app = Flask(__name__)
 configure_logger(app.logger)
