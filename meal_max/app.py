@@ -422,9 +422,9 @@ def add_to_watchlist():
         title=movie_data.get('title'), 
         overview=movie_data.get('overview'),
         release_date=movie_data.get('release_date'), 
-        vote_average=movie_data.get('vote_average')
-        popularity=movie_data.get('popularity', 0.0)
-    )
+        vote_average=movie_data.get('vote_average'),
+        popularity=movie_data.get('popularity', 0.0) )
+        
     db.session.add(watchlist_entry)
     db.session.commit()
 
