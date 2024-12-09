@@ -1,3 +1,5 @@
 .env
 
 meal_max_venv
+
+__pycache__
