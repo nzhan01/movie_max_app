@@ -14,29 +14,20 @@ class Watchlist(db.Model):
     __tablename__ = 'watchlist'
 
     id = db.Column(db.Integer, primary_key=True)  # Added primary key for Watchlist
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     movie_id = db.Column(db.Integer, nullable = False) #Used to get movie info from TMDB
-    movie_title = db.Column(db.String(200), nullable=False)
-    overview = db.Column(db.Text, nullable = True)
-    popularity = db.Column(db.Float, nullable=True)
-    added_on = db.Column(db.DateTime, default=datetime.utcnow)
-    watched = db.Column(db.Boolean, default=False)
+    
 
     user = db.relationship('Users', back_populates='watchlist')
 
     @staticmethod
-    def add_to_watchlist(user_id, movie_id, title, overview=None, release_date=None, popularity=0.0):
+    def add_to_watchlist(user_id, title):
         """
         Adds a movie to the user's watchlist.
 
         Args:
             user_id (int): ID of the user.
-            movie_id (int): ID of the movie (from TMDB).
             title (str): Title of the movie.
-            overview (str, optional): Overview/summary of the movie. Defaults to None.
-            release_date (str, optional): Release date of the movie. Defaults to None.
-            popularity (float, optional): Popularity score of the movie. Defaults to 0.0.
-
+            
         Returns:
             None
 
@@ -47,10 +38,9 @@ class Watchlist(db.Model):
             user_id=user_id,
             movie_id=movie_id,
             movie_title=title,
-            overview=overview,
-            release_date=release_date,
-            popularity=popularity
         )
+
+        
         db.session.add(entry)
         db.session.commit()
 
