@@ -1,9 +1,11 @@
 from dotenv import load_dotenv
 import os
-from flask import Flask, jsonify, make_response, Response, request
+from flask import Flask, app, jsonify, make_response, Response, request
 from werkzeug.exceptions import BadRequest, Unauthorized
-
 import requests
+
+from meal_max.meal_max.utils.logger import configure_logger
+
 # from flask_cors import CORS
 
 """test commeent  
@@ -13,10 +15,10 @@ dsf
 dsf
 """
 from meal_max.db import db
-from meal_max.models import kitchen_model
-from meal_max.models.battle_model import BattleModel
+from meal_max.models import kitchen_model #Used as template
+from meal_max.models.battle_model import BattleModel #Used as template
 from meal_max.utils.sql_utils import check_database_connection, check_table_exists
-from meal_max.models.mongo_session_model import login_user, logout_user
+from meal_max.models.mongo_session_model import login_user, logout_user 
 
 from meal_max.models.user_model import Users
 from meal_max.models.watchlist_model import Watchlist
@@ -26,6 +28,8 @@ load_dotenv()
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
 TMDB_READ_ACCESS_TOKEN = os.getenv("TMDB_READ_ACCESS_TOKEN")
 
+app = Flask(__name__)
+configure_logger(app.logger)
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///watchlist.db")
@@ -34,7 +38,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
 with app.app_context():
+    db.init_app(app)  
     db.create_all()
+
+#Ensures TMDB are loaded into the environment 
+TMDB_READ_ACCESS_TOKEN = os.getenv("TMDB_READ_ACCESS_TOKEN")
+BASE_URL = "https://api.themoviedb.org/3/configuration"
 
 ####################################################
 #
