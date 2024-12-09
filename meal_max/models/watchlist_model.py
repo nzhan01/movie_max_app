@@ -12,14 +12,14 @@ configure_logger(logger)
 class Watchlist(db.Model):
     __tablename__ = 'watchlist'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)  # Added primary key for Watchlist
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     movie_id = db.Column(db.Integer, nullable = False) #Used to get movie info from TMDB
     movie_title = db.Column(db.String(200), nullable=False)
     overview = db.Column(db.Text, nullable = True)
     popularity = db.Column(db.Float, nullable=True)
     added_on = db.Column(db.DateTime, default=datetime.utcnow)
-    watched = db.Column(db.Boolean, default=False)
+    
 
     user = db.relationship('Users', back_populates='watchlist')
 
