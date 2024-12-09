@@ -28,14 +28,13 @@ TMDB_READ_ACCESS_TOKEN = os.getenv("TMDB_READ_ACCESS_TOKEN")
 
 
 
-app = Flask(__name__)
-# This bypasses standard security stuff we'll talk about later
-# If you get errors that use words like cross origin or flight,
-# uncomment this
-# CORS(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///watchlist.db")
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Initialize the BattleModel
-battle_model = BattleModel()
+db.init_app(app)
+
+with app.app_context():
+    db.create_all()
 
 ####################################################
 #
@@ -44,10 +43,10 @@ battle_model = BattleModel()
 ####################################################
 @app.route('/')
 def root():
-    return jsonify({"message": "Welcome to Meal Max!"}), 200
+    return jsonify({"message": "Welcome to Movie Max"}), 200
 @app.route('/api')
 def api_root():
-    return jsonify({"message": "Welcome to Meal Max API!"}), 200
+    return jsonify({"message": "Welcome to Movie Max API!"}), 200
 ####################################################
 #
 # Healthchecks
@@ -303,6 +302,60 @@ def search_movie(query):
     except requests.exceptions.RequestException as e:
         app.logger.error(f"Error calling TMDB API: {e}")
         return jsonify({"error": "Failed to fetch movie data"}), 500
+    
+@app.route('/api/movie/<int:movie_id>/providers', methods=['GET'])
+def get_movie_providers(movie_id):
+    # Construct the URL using the movie_id from the route
+    url = f"{BASE_URL}/movie/{movie_id}/watch/providers"
+    headers = {
+        "accept": "application/json",
+        "Authorization": f"Bearer {TMDB_READ_ACCESS_TOKEN}"
+    }
+
+    # Send a GET request to the TMDB API
+    response = requests.get(url, headers=headers)
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        data = response.json()
+        # 'data' now contains all the watch provider information.
+        # You can directly return this to the user, or filter it as needed.
+        return jsonify(data), 200
+    else:
+        # If not successful, maybe the movie doesn't exist or TMDB is down.
+        return jsonify({"error": "Failed to get watch providers"}), 500
+    
+@app.route('/api/movie/<int:movie_id>/recommendations', methods=['GET'])
+def get_recommendations(movie_id):
+    url = f"{BASE_URL}/movie/{movie_id}/recommendations"
+    headers = {
+        "accept": "application/json",
+        "Authorization": f"Bearer {TMDB_READ_ACCESS_TOKEN}"
+    }
+
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        data = response.json()
+        # 'data["results"]' usually contains a list of recommended movies.
+        recommendations = data.get("results", [])
+
+        # For clarity, we might return a simplified list of recommended movies:
+        simplified_recs = [
+            {
+                "title": rec.get("title"),
+                "overview": rec.get("overview"),
+                "release_date": rec.get("release_date"),
+                "vote_average": rec.get("vote_average")
+            }
+            for rec in recommendations
+        ]
+
+        return jsonify(simplified_recs), 200
+    else:
+        return jsonify({"error": "Failed to get recommendations"}), 500
+
+
 
 ##########################################################
 #
