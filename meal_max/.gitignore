@@ -2,4 +2,8 @@
 
 meal_max_venv
 
+models.__pycache__
+utils.__pycache__
+tests.__pycache__
+db.__pycache__
 __pycache__
