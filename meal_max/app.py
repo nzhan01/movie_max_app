@@ -253,7 +253,7 @@ def logout():
 ##########################################################
 
 
-@app.route('/api/search-movie/<string:query>', methods=['GET'])
+@app.route('/api/search/movie', methods=['GET'])
 def search_movie(query):
     """
     Search for a movie using the TMDB API.
@@ -302,7 +302,7 @@ def search_movie(query):
         app.logger.error(f"Error calling TMDB API: {e}")
         return jsonify({"error": "Failed to fetch movie data"}), 500
     
-@app.route('/api/movie/<int:movie_id>/providers', methods=['GET'])
+@app.route('/api/movie/{movie_id}/watch/providers', methods=['GET'])
 def get_movie_providers(movie_id):
     # Construct the URL using the movie_id from the route
     url = f"{BASE_URL}/movie/{movie_id}/watch/providers"
@@ -324,7 +324,7 @@ def get_movie_providers(movie_id):
         # If not successful, maybe the movie doesn't exist or TMDB is down.
         return jsonify({"error": "Failed to get watch providers"}), 500
     
-@app.route('/api/movie/<int:movie_id>/recommendations', methods=['GET'])
+@app.route('/api/movie/{movie_id}/recommendations', methods=['GET'])
 def get_recommendations(movie_id):
     url = f"{BASE_URL}/movie/{movie_id}/recommendations"
     headers = {
@@ -354,158 +354,72 @@ def get_recommendations(movie_id):
     else:
         return jsonify({"error": "Failed to get recommendations"}), 500
 
+@app.route('/api/movie/popular', methods=['GET'])
+def get_movie_popularity(movie_id):
+    """
+    Fetches the popularity score of a specific movie by its ID from TMDB.
 
+    Args:
+        movie_id (int): The TMDB movie ID.
 
-##########################################################
-#
-# Watch list
-#
-##########################################################
-'''
-@app.route('/add-to-watchlist', methods=['POST'])
-def add_to_watchlist():
-    data = request.json
-    user_id = data['user_id']
-    movie_id = data['movie_id']
-
-    # Check if the movie is already in the watchlist
-    existing_entry = Watchlist.query.filter_by(user_id=user_id, movie_id=movie_id).first()
-    if existing_entry:
-        return jsonify({"message": "Movie is already in your watchlist!"}), 400
-
-    # Add the movie to the watchlist
-    watchlist_entry = Watchlist(user_id=user_id, movie_id=movie_id)
-    db.session.add(watchlist_entry)
-    db.session.commit()
-
-    return jsonify({"message": "Movie added to watchlist!"}), 201
-'''
-
-
-@app.route('/add-to-watchlist', methods=['POST'])
-def add_to_watchlist():
-    data = request.json
-    user_id = data['user_id']
-    movie_title = data['movie_title']  # Expecting movie title from the request body
-
-    # Validate if the movie exists on TMDB
-    url = f"{BASE_URL}/search/movie"
+    Returns:
+        JSON response containing the popularity score or an error message.
+    """
+    url = f"{BASE_URL}/movie/{movie_id}"
     headers = {
         "accept": "application/json",
         "Authorization": f"Bearer {TMDB_READ_ACCESS_TOKEN}"
     }
-    params = {
-        "query": movie_title,
-        "include_adult": "false",
-        "language": "en-US",
-        "page": 1
+
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        data = response.json()
+        popularity = data.get("popularity", None)
+        title = data.get("title", "Unknown Title")
+        
+        if popularity is not None:
+            return jsonify({"movie_id": movie_id, "title": title, "popularity": popularity}), 200
+        else:
+            return jsonify({"error": "Popularity score not found"}), 404
+    else:
+        return jsonify({"error": "Failed to fetch movie details"}), response.status_code
+    
+@app.route('/api/movie/{movie_id}', methods=['GET'])
+def get_movie_details(movie_id):
+    """
+    Fetches detailed information about a specific movie by its ID from TMDB.
+
+    Args:
+        movie_id (int): The TMDB movie ID.
+
+    Returns:
+        JSON response containing movie details or an error message.
+    """
+    url = f"{BASE_URL}/movie/{movie_id}"
+    headers = {
+        "accept": "application/json",
+        "Authorization": f"Bearer {TMDB_READ_ACCESS_TOKEN}"
     }
-    response = requests.get(url, headers=headers, params=params)
 
-    if response.status_code != 200:
-        return jsonify({"error": "Error fetching movie from TMDB"}), 500
+    response = requests.get(url, headers=headers)
 
-    results = response.json().get("results", [])
-    if not results:
-        return jsonify({"error": "Movie not found"}), 404
-
-    # Use the first result (or refine selection criteria)
-    movie_data = results[0]
-    movie_id = movie_data.get("id")
-    movie_overview = movie_data.get("overview", "No overview available")
-    movie_popularity = movie_data.get("popularity", 0.0)
-    release_date = movie_data.get("release_date", "Unknown")
-
-    # Check if the movie is already in the watchlist
-    existing_entry = Watchlist.query.filter_by(user_id=user_id, movie_id=movie_id).first()
-    if existing_entry:
-        return jsonify({"message": "Movie is already in your watchlist!"}), 400
-
-    # Add the movie to the watchlist
-    watchlist_entry = Watchlist(
-        user_id=user_id,
-        movie_id=movie_id,  # TMDB movie ID
-        movie_title=movie_data.get("title"),
-        overview=movie_overview,
-        release_date=release_date,
-        popularity=movie_popularity,
-    )
-    db.session.add(watchlist_entry)
-    db.session.commit()
-
-    return jsonify({"message": "Movie added to watchlist!", "movie_id": movie_id}), 201
-
-
-    # Add the movie to the watchlist
-    watchlist_entry = Watchlist(
-    user_id=user_id, 
-    movie_id=movie_id, 
-    movie_title=movie_data.get('title'), 
-    overview=movie_data.get('overview'),
-    release_date=movie_data.get('release_date'), 
-    vote_average=movie_data.get('vote_average'),
-    popularity=movie_data.get('popularity', 0.0)
-    )
-
-    db.session.add(watchlist_entry)
-    db.session.commit()
-
-    return jsonify({"message": "Movie added to watchlist!"}), 201
-
-'''
-@app.route('/get-watchlist/<int:user_id>', methods=['GET'])
-def get_watchlist(user_id):
-    watchlist = Watchlist.query.filter_by(user_id=user_id).all()
-    movie_details = []
-
-    # Fetch movie details from the database or TMDB API
-    for entry in watchlist:
-        movie = Movies.query.filter_by(id=entry.movie_id).first()  # Or use TMDB API
-        movie_details.append({
-            "movie_id": entry.movie_id,
-            "title": movie.title,
-            "release_date": movie.release_date,
-            "poster_path": movie.poster_path,
-            "watched": entry.watched
-        })
-
-    return jsonify(movie_details), 200
-'''
-
-@app.route('/mark-watched', methods=['PUT'])
-def mark_watched():
-    data = request.json
-    user_id = data['user_id']
-    movie_id = data['movie_id']
-
-    # Find the movie in the watchlist
-    watchlist_entry = Watchlist.query.filter_by(user_id=user_id, movie_id=movie_id).first()
-    if not watchlist_entry:
-        return jsonify({"message": "Movie not found in watchlist!"}), 404
-
-    # Mark it as watched
-    watchlist_entry.watched = True
-    db.session.commit()
-
-    return jsonify({"message": "Movie marked as watched!"}), 200
-
-@app.route('/remove-from-watchlist', methods=['DELETE'])
-def remove_from_watchlist():
-    data = request.json
-    user_id = data['user_id']
-    movie_id = data['movie_id']
-
-    # Find the movie in the watchlist
-    watchlist_entry = Watchlist.query.filter_by(user_id=user_id, movie_id=movie_id).first()
-    if not watchlist_entry:
-        return jsonify({"message": "Movie not found in watchlist!"}), 404
-
-    # Remove it from the watchlist
-    db.session.delete(watchlist_entry)
-    db.session.commit()
-
-    return jsonify({"message": "Movie removed from watchlist!"}), 200
-
+    if response.status_code == 200:
+        data = response.json()
+        movie_details = {
+            "id": data.get("id"),
+            "title": data.get("title"),
+            "overview": data.get("overview"),
+            "release_date": data.get("release_date"),
+            "vote_average": data.get("vote_average"),
+            "vote_count": data.get("vote_count"),
+            "popularity": data.get("popularity"),
+            "runtime": data.get("runtime"),
+            "genres": [genre["name"] for genre in data.get("genres", [])]
+        }
+        return jsonify(movie_details), 200
+    else:
+        return jsonify({"error": "Failed to fetch movie details"}), response.status_code
 
 
 
