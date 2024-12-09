@@ -43,7 +43,7 @@ with app.app_context():
 
 #Ensures TMDB are loaded into the environment 
 TMDB_READ_ACCESS_TOKEN = os.getenv("TMDB_READ_ACCESS_TOKEN")
-BASE_URL = "https://api.themoviedb.org/3/configuration"
+BASE_URL = "https://api.themoviedb.org/3"
 
 ####################################################
 #
