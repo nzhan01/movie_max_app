@@ -2,8 +2,9 @@
 
 meal_max_venv
 meal_max/db/__pycache__
-models.__pycache__
+meal_max.models.__pycache__
 utils.__pycache__
 tests.__pycache__
 db.__pycache__
-__pycache__
+__pycache__/
+**/__pycache__/
