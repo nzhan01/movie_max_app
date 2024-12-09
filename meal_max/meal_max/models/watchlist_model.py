@@ -17,6 +17,7 @@ class Watchlist(db.Model):
     movie_id = db.Column(db.Integer, nullable = False) #Used to get movie info from TMDB
     movie_title = db.Column(db.String(200), nullable=False)
     overview = db.Column(db.Text, nullable = True)
+    popularity = db.Column(db.Float, nullable=True)
     added_on = db.Column(db.DateTime, default=datetime.utcnow)
     watched = db.Column(db.Boolean, default=False)
 
