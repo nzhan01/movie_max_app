@@ -15,11 +15,7 @@ dsf
 dsf
 """
 from meal_max.db import db
-from meal_max.models import kitchen_model #Used as template
-from meal_max.models.battle_model import BattleModel #Used as template
 from meal_max.utils.sql_utils import check_database_connection, check_table_exists
-from meal_max.models.mongo_session_model import login_user, logout_user 
-
 from meal_max.models.user_model import Users
 from meal_max.models.watchlist_model import Watchlist
 
@@ -35,7 +31,6 @@ configure_logger(app.logger)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///watchlist.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-db.init_app(app)
 
 with app.app_context():
     db.init_app(app)  
@@ -202,9 +197,6 @@ def login():
         # Get user ID
         user_id = Users.get_id_by_username(username)
 
-        # Load user's combatants into the battle model
-        login_user(user_id, battle_model)
-
         app.logger.info("User %s logged in successfully.", username)
         return jsonify({"message": f"User {username} logged in successfully."}), 200
 
@@ -242,7 +234,6 @@ def logout():
         user_id = Users.get_id_by_username(username)
 
         # Save user's combatants and clear the battle model
-        logout_user(user_id, battle_model)
 
         app.logger.info("User %s logged out successfully.", username)
         return jsonify({"message": f"User {username} logged out successfully."}), 200
@@ -395,20 +386,35 @@ def add_to_watchlist():
 def add_to_watchlist():
     data = request.json
     user_id = data['user_id']
-    movie_id = data['movie_id']
+    movie_title = data['movie_title']  # Expecting movie title from the request body
 
     # Validate if the movie exists on TMDB
-    url = f"{BASE_URL}/movie/{movie_id}"
+    url = f"{BASE_URL}/search/movie"
     headers = {
         "accept": "application/json",
         "Authorization": f"Bearer {TMDB_READ_ACCESS_TOKEN}"
     }
-    response = requests.get(url, headers=headers)
-    
-    if response.status_code != 200:
-        return jsonify({"error": "Invalid movie ID"}), 400
+    params = {
+        "query": movie_title,
+        "include_adult": "false",
+        "language": "en-US",
+        "page": 1
+    }
+    response = requests.get(url, headers=headers, params=params)
 
-    movie_data = response.json()
+    if response.status_code != 200:
+        return jsonify({"error": "Error fetching movie from TMDB"}), 500
+
+    results = response.json().get("results", [])
+    if not results:
+        return jsonify({"error": "Movie not found"}), 404
+
+    # Use the first result (or refine selection criteria)
+    movie_data = results[0]
+    movie_id = movie_data.get("id")
+    movie_overview = movie_data.get("overview", "No overview available")
+    movie_popularity = movie_data.get("popularity", 0.0)
+    release_date = movie_data.get("release_date", "Unknown")
 
     # Check if the movie is already in the watchlist
     existing_entry = Watchlist.query.filter_by(user_id=user_id, movie_id=movie_id).first()
@@ -417,14 +423,30 @@ def add_to_watchlist():
 
     # Add the movie to the watchlist
     watchlist_entry = Watchlist(
-        user_id=user_id, 
-        movie_id=movie_id, 
-        title=movie_data.get('title'), 
-        overview=movie_data.get('overview'),
-        release_date=movie_data.get('release_date'), 
-        vote_average=movie_data.get('vote_average')
-        popularity=movie_data.get('popularity', 0.0)
+        user_id=user_id,
+        movie_id=movie_id,  # TMDB movie ID
+        movie_title=movie_data.get("title"),
+        overview=movie_overview,
+        release_date=release_date,
+        popularity=movie_popularity,
     )
+    db.session.add(watchlist_entry)
+    db.session.commit()
+
+    return jsonify({"message": "Movie added to watchlist!", "movie_id": movie_id}), 201
+
+
+    # Add the movie to the watchlist
+    watchlist_entry = Watchlist(
+    user_id=user_id, 
+    movie_id=movie_id, 
+    movie_title=movie_data.get('title'), 
+    overview=movie_data.get('overview'),
+    release_date=movie_data.get('release_date'), 
+    vote_average=movie_data.get('vote_average'),
+    popularity=movie_data.get('popularity', 0.0)
+    )
+
     db.session.add(watchlist_entry)
     db.session.commit()
 
