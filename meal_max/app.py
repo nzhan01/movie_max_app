@@ -273,9 +273,9 @@ def search_movie(query):
     Returns:
         JSON response with movie search results or an error message.
     """
-    if not TMDB_API_KEY:  # Change: Validate API key existence
-        app.logger.error("TMDB API key not found.")
-        return jsonify({"error": "API key not configured"}), 500
+    if not TMDB_READ_ACCESS_TOKEN:  # Change: Validate API key existence
+        app.logger.error("TMDB read access not found.")
+        return jsonify({"error": "TMDB read access token not configured"}), 500
 
     url = f"{BASE_URL}/search/movie"
     headers = {
