@@ -4,7 +4,7 @@ from flask import Flask, app, jsonify, make_response, Response, request
 from werkzeug.exceptions import BadRequest, Unauthorized
 import requests
 
-from utils.logger import configure_logger
+from meal_max.utils.logger import configure_logger
 
 # from flask_cors import CORS
 
@@ -14,9 +14,9 @@ dsf
 
 dsf
 """
-from db import db
-from utils.sql_utils import check_database_connection, check_table_exists
-from models.user_model import Users
+from meal_max.db import db
+from meal_max.utils.sql_utils import check_database_connection, check_table_exists
+from meal_max.models.user_model import Users
 from models.watchlist_model import Watchlist
 
 # Load environment variables from .env file
