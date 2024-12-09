@@ -17,7 +17,7 @@ dsf
 from meal_max.db import db
 from meal_max.utils.sql_utils import check_database_connection, check_table_exists
 from meal_max.models.user_model import Users
-from models.watchlist_model import Watchlist
+from meal_max.models.watchlist_model import Watchlist
 
 # Load environment variables from .env file
 load_dotenv()
