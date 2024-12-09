@@ -1,8 +1,8 @@
 import pytest
 from unittest.mock import MagicMock, patch
 from datetime import datetime
-from meal_max.models.watchlist_model import Watchlist
-from meal_max.models.user_model import Users
+from models.watchlist_model import Watchlist
+from models.user_model import Users
 from db import db
 
 

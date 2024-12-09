@@ -1,5 +1,5 @@
 import pytest
-from meal_max.app import app, db
+from app import app, db
 
 @pytest.fixture
 def setup_user(test_client):
