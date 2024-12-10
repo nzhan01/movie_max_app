@@ -70,28 +70,32 @@ def healthcheck() -> Response:
     app.logger.info('Health check')
     return make_response(jsonify({'status': 'healthy'}), 200)
 
-@app.route('/api/db-check', methods=['GET'])
-def db_check() -> Response:
-    """
-    Route to check if the database connection and users table are functional.
+@app.route('/api/init-db', methods=['POST'])
+def init_db():
+        """
+        Initialize or recreate database tables.
 
-    Returns:
-        JSON response indicating the database health status.
-    Raises:
-        404 error if there is an issue with the database.
-    """
-    try:
-        app.logger.info("Checking database connection...")
-        check_database_connection()
-        app.logger.info("Database connection is OK.")
-        app.logger.info("Checking if meals table exists...")
-        check_table_exists("watchlist")
-        app.logger.info("watchlist table exists.")
-        return make_response(jsonify({'database_status': 'healthy'}), 200)
-    except Exception as e:
-        return make_response(jsonify({'error': str(e)}), 404)
+        This route initializes the database tables defined in the SQLAlchemy models.
+        If the tables already exist, they are dropped and recreated to ensure a clean
+        slate. Use this with caution as all existing data will be deleted.
 
+        Returns:
+            Response: A JSON response indicating the success or failure of the operation.
 
+        Logs:
+            Logs the status of the database initialization process.
+        """
+        try:
+            with app.app_context():
+                app.logger.info("Dropping all existing tables.")
+                db.drop_all()  # Drop all existing tables
+                app.logger.info("Creating all tables from models.")
+                db.create_all()  # Recreate all tables
+            app.logger.info("Database initialized successfully.")
+            return jsonify({"status": "success", "message": "Database initialized successfully."}), 200
+        except Exception as e:
+            app.logger.error("Failed to initialize database: %s", str(e))
+            return jsonify({"status": "error", "message": "Failed to initialize database."}), 500
 @app.route('/api/create-user', methods=['POST'])
 def create_user() -> Response:
         """
@@ -128,7 +132,6 @@ def create_user() -> Response:
         except Exception as e:
             app.logger.error("Failed to add user: %s", str(e))
             return make_response(jsonify({'error': str(e)}), 500)
-
 @app.route('/api/delete-user', methods=['DELETE'])
 def delete_user() -> Response:
     """
@@ -452,7 +455,7 @@ def search_movie():
         return make_response(jsonify({'error': str(e)}), 500)
 
 
-@app.route('/api/movie/<int:movie_id>/watch/providers', methods=['GET'])
+@app.route('/movie/{movie_id}/watch/providers', methods=['GET'])
 def get_movie_providers(movie_id):
     """
     Get watch providers for a movie.
@@ -465,7 +468,7 @@ def get_movie_providers(movie_id):
         return make_response(jsonify({'error': str(e)}), 500)
 
 
-@app.route('/api/movie/<int:movie_id>', methods=['GET'])
+@app.route('/api/movie/{movie_id}', methods=['GET'])
 def get_movie_details(movie_id):
     """
     Fetch movie details by ID.
@@ -479,7 +482,7 @@ def get_movie_details(movie_id):
 
 
 
-@app.route('/api/movie/<int:movie_id>/recommendations', methods=['GET'])
+@app.route('/api/movie/{movie_id}/recommendations', methods=['GET'])
 def get_recommendations(movie_id):
     """
     Fetch recommended movies based on the given movie ID.
@@ -492,7 +495,7 @@ def get_recommendations(movie_id):
         return make_response(jsonify({'error': str(e)}), 500)
 
 
-@app.route('/api/movie/popularity', methods=['GET'])
+@app.route('/api/movie/popular', methods=['GET'])
 def get_popular_movies():
     """
     Fetch the most popular movies.
@@ -504,6 +507,95 @@ def get_popular_movies():
     except Exception as e:
         app.logger.error(f"Error fetching popular movies: {e}")
         return make_response(jsonify({'error': str(e)}), 500)
+    
+@app.route('/api/watchlist/<username>', methods=['GET'])
+def get_watchlist(username):
+    """
+    Retrieves the watchlist for a specific user.
+    """
+    user = Users.query.filter_by(username=username).first()
+    if not user:
+        return jsonify({"error": f"User '{username}' not found"}), 404
+
+    watchlist = Watchlist.query.filter_by(user_id=user.id).all()
+    return jsonify([
+        {"id": entry.id, "movie_id": entry.movie_id, "movie_title": entry.movie_title}
+        for entry in watchlist
+    ]), 200
+
+@app.route('/api/watchlist/add', methods=['POST'])
+def add_to_watchlist():
+    """
+    Adds a movie to the user's watchlist.
+    """
+    try:
+        data = request.get_json()
+        username = data.get('username')
+        movie_id = data.get('movie_id')
+        movie_title = data.get('movie_title')
+
+        # Validate input data
+        if not username or not movie_id or not movie_title:
+            raise BadRequest("Missing required fields: username, movie_id, or movie_title.")
+
+        # Check if user exists
+        user = Users.query.filter_by(username=username).first()
+        if not user:
+            return jsonify({"error": f"User '{username}' not found"}), 404
+
+        # Check if movie is already in the watchlist
+        existing_entry = Watchlist.query.filter_by(user_id=user.id, movie_id=movie_id).first()
+        if existing_entry:
+            return jsonify({"error": "Movie already in watchlist"}), 400
+
+        # Add the movie to the watchlist
+        new_entry = Watchlist(user_id=user.id, movie_id=movie_id, movie_title=movie_title)
+        db.session.add(new_entry)
+        db.session.commit()
+
+        return jsonify({"message": f"'{movie_title}' has been added to the watchlist"}), 200
+
+    except BadRequest as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        app.logger.error(f"Error adding to watchlist: {e}")
+        return jsonify({"error": "An unexpected error occurred"}), 500
+    
+@app.route('/api/watchlist/remove', methods=['DELETE'])
+def remove_from_watchlist():
+    """
+    Removes a movie from the user's watchlist.
+    """
+    try:
+        data = request.get_json()
+        username = data.get('username')
+        movie_id = data.get('movie_id')
+
+        # Validate input data
+        if not username or not movie_id:
+            raise BadRequest("Missing required fields: username or movie_id.")
+
+        # Check if user exists
+        user = Users.query.filter_by(username=username).first()
+        if not user:
+            return jsonify({"error": f"User '{username}' not found"}), 404
+
+        # Check if the movie exists in the watchlist
+        movie_entry = Watchlist.query.filter_by(user_id=user.id, movie_id=movie_id).first()
+        if not movie_entry:
+            return jsonify({"error": "Movie not found in watchlist"}), 404
+
+        # Remove the movie from the watchlist
+        db.session.delete(movie_entry)
+        db.session.commit()
+
+        return jsonify({"message": f"Movie with ID '{movie_id}' has been removed from the watchlist"}), 200
+
+    except BadRequest as e:
+        return jsonify({"error": str(e)}), 400
+    except Exception as e:
+        app.logger.error(f"Error removing from watchlist: {e}")
+        return jsonify({"error": "An unexpected error occurred"}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

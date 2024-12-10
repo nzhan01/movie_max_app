@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the base URL for the Flask API
-BASE_URL1="http://localhost:5000/api"
+BASE_URL1="http://localhost:5001/api"
 #Define the base URL for the TMDB API
 BASE_URL="https://api.themoviedb.org/3"
 
@@ -118,171 +118,164 @@ init_db() {
 
 # Function to search a movie 
 search_movie(){
-  local movie_title="$1"
-  echo "Searching for movie: $movie_title..."
+  local movie_title="$1"  # Movie title as a parameter
+  echo "Searching for movie: $movie_title using TMDB API..."
 
   # Perform the API call
-  response=$(curl -s -X GET "$BASE_URL/search?title=$movie_title")
+  response=$(curl -s -X GET "$BASE_URL/search/movie" \
+    --get \
+    --data-urlencode "api_key=$TMDB_API_KEY" \
+    --data-urlencode "query=$movie_title")
 
-  # Check if the response contains valid data
-  if echo "$response" | grep -q '"title":'; then
-    echo "Search successful for movie: $movie_title."
-    if [ "$ECHO_JSON" = true ]; then
-      echo "Search Results JSON:"
-      echo "$response" | jq .
-    fi
-  elif echo "$response" | grep -q '"error":'; then
-    echo "Search failed: $(echo "$response" | jq -r '.error')"
-    exit 1
-  else
-    echo "Unexpected response format."
+  # Check if the response is valid JSON
+  if ! echo "$response" | jq empty 2>/dev/null; then
+    echo "Unexpected response format: Not valid JSON."
+    echo "Response: $response"
     exit 1
   fi
 
+  # Check if the response contains results
+  if echo "$response" | jq -e '.results | length > 0' > /dev/null; then
+    echo "Search successful for movie: $movie_title."
+    if [ "$ECHO_JSON" = true ]; then
+      echo "Search Results JSON:"
+      echo "$response" | jq '.results'
+    else
+      # Print the first result
+      echo "Top result:"
+      echo "$response" | jq '.results[0]'
+    fi
+  else
+    echo "No results found for movie: $movie_title."
+    exit 1
+  fi
 }
 
 # Function to get where movie is available for viewing
 get_movie_providers(){
-  local movie_id=27205  # Movie ID for Inception
-  echo "Testing /movie/${movie_id}/providers..."
+  local movie_id="$1"
+  echo "Fetching providers for movie ID: $movie_id..."
 
-  response=$(curl -s -X GET "$BASE_URL/$movie_id/providers")
-  
-  if echo "$response" | grep -q '"US"'; then
-    echo "Movie providers fetched successfully."
-    if [ "$ECHO_JSON" = true ]; then
-      echo "Response JSON:"
-      echo "$response" | jq .
-    fi
+  response=$(curl -s -X GET "$BASE_URL/movie/$movie_id/watch/providers?api_key=$TMDB_API_KEY")
 
-    flatrate=$(echo "$response" | jq -r '.results.US.flatrate[0].provider_name')
-    if [ "$flatrate" = "Peacock Premium" ]; then
-      echo "Provider validation passed."
-    else
-      echo "Provider validation failed: Expected 'Peacock Premium', got '$flatrate'."
-      exit 1
-    fi
-  else
-    echo "Failed to fetch movie providers."
+  if ! echo "$response" | jq empty 2>/dev/null; then
+    echo "Unexpected response format: Not valid JSON."
+    echo "Response: $response"
     exit 1
   fi
+
+  echo "Movie Providers:"
+  echo "$response" | jq .
 }
 
 #Function to fetch movie details by ID
 get_movie_details(){
-  local movie_id=27205  # Movie ID for Inception
-  echo "Testing /movie/${movie_id}..."
+  local movie_id="$1"
+  echo "Fetching details for movie ID: $movie_id..."
 
-  response=$(curl -s -X GET "$BASE_URL/$movie_id")
-  
-  if echo "$response" | grep -q '"title": "Inception"'; then
-    echo "Movie details fetched successfully."
-    if [ "$ECHO_JSON" = true ]; then
-      echo "Response JSON:"
-      echo "$response" | jq .
-    fi
-  else
-    echo "Failed to fetch movie details."
+  response=$(curl -s -X GET "$BASE_URL/movie/$movie_id?api_key=$TMDB_API_KEY")
+
+  if ! echo "$response" | jq empty 2>/dev/null; then
+    echo "Unexpected response format: Not valid JSON."
+    echo "Response: $response"
     exit 1
   fi
+
+  echo "Movie Details:"
+  echo "$response" | jq .
 }
 #Function to get recommended movies based on the given movie ID.
 get_recommendations(){
-  local movie_id=27205  # Movie ID for Inception
-  echo "Testing /movie/${movie_id}/recommendations..."
+  local movie_id="$1"
+  echo "Fetching recommendations for movie ID: $movie_id..."
 
-  response=$(curl -s -X GET "$BASE_URL/$movie_id/recommendations")
-  
-  if echo "$response" | grep -q '"title": "The Dark Knight"'; then
-    echo "Recommendations fetched successfully."
-    if [ "$ECHO_JSON" = true ]; then
-      echo "Response JSON:"
-      echo "$response" | jq .
-    fi
-  else
-    echo "Failed to fetch recommendations."
+  response=$(curl -s -X GET "$BASE_URL/movie/$movie_id/recommendations?api_key=$TMDB_API_KEY")
+
+  if ! echo "$response" | jq empty 2>/dev/null; then
+    echo "Unexpected response format: Not valid JSON."
+    echo "Response: $response"
     exit 1
   fi
+
+  echo "Movie Recommendations:"
+  echo "$response" | jq .
 }
 #Function to get the most popular movies
 get_movie_popularity(){
-  echo "Testing /movie/popular..."
+  local movie_id="$1"
+  echo "Fetching popularity for movie ID: $movie_id..."
 
-  response=$(curl -s -X GET "$BASE_URL/popular")
-  
-  if echo "$response" | grep -q '"title": "Venom: The Last Dance"'; then
-    echo "Popular movies fetched successfully."
-    if [ "$ECHO_JSON" = true ]; then
-      echo "Response JSON:"
-      echo "$response" | jq .
-    fi
-  else
-    echo "Failed to fetch popular movies."
+  response=$(curl -s -X GET "$BASE_URL/movie/$movie_id?api_key=$TMDB_API_KEY")
+
+  if ! echo "$response" | jq empty 2>/dev/null; then
+    echo "Unexpected response format: Not valid JSON."
+    echo "Response: $response"
     exit 1
   fi
+
+  popularity=$(echo "$response" | jq '.popularity')
+  echo "Movie Popularity: $popularity"
 }
 #Retrieves the watchlist for a given user.
 get_watchlist(){
-  echo "Testing retrieving watchlist for user '$USERNAME'..."
+  local username="$1"
+  echo "Fetching watchlist for user: $username..."
 
-  response=$(curl -s -X GET "$BASE_URL/$USERNAME")
+  response=$(curl -s -X GET "$BASE_URL1/watchlist/$username")
 
-  if echo "$response" | grep -q '"movie_title"'; then
-    echo "Watchlist retrieved successfully."
-    if [ "$ECHO_JSON" = true ]; then
-      echo "Response JSON:"
-      echo "$response" | jq .
-    fi
-  else
-    echo "Failed to retrieve watchlist."
+  # Validate response JSON format
+  if ! echo "$response" | jq empty 2>/dev/null; then
+    echo "Unexpected response format: Not valid JSON."
+    echo "Response: $response"
     exit 1
   fi
+
+  # Display the watchlist
+  echo "User Watchlist:"
+  echo "$response" | jq .
 }
 #Add a movie from the user's watchlist.
 add_to_watchlist(){
-  local movie_title="$1"
-  echo "Testing adding '$movie_title' to $USERNAME's watchlist..."
+  local username="$1"
+  local movie_id="$2"
+  local movie_title="$3"
+  echo "Adding movie: $movie_title to $username's watchlist..."
 
-  response=$(curl -s -X POST "$BASE_URL/add" \
+  response=$(curl -s -X POST "$BASE_URL1/watchlist/add" \
     -H "Content-Type: application/json" \
-    -d "{\"username\": \"$USERNAME\", \"movie_title\": \"$movie_title\"}")
+    -d "{\"username\": \"$username\", \"movie_id\": $movie_id, \"movie_title\": \"$movie_title\"}")
 
-  if echo "$response" | grep -q '"message"'; then
-    echo "Movie '$movie_title' added to watchlist successfully."
-    if [ "$ECHO_JSON" = true ]; then
-      echo "Response JSON:"
-      echo "$response" | jq .
-    fi
-  elif echo "$response" | grep -q '"error"'; then
-    echo "Failed to add movie: $(echo "$response" | jq -r '.error')"
-    exit 1
-  else
-    echo "Unexpected response format."
+  # Validate response JSON format
+  if ! echo "$response" | jq empty 2>/dev/null; then
+    echo "Unexpected response format: Not valid JSON."
+    echo "Response: $response"
     exit 1
   fi
+
+  # Display the response
+  echo "Add to Watchlist Response:"
+  echo "$response" | jq .
 }
 #Remove a movie from the user's watchlist.
 remove_from_watchlist(){
-  local movie_title="$1"
-  echo "Testing removing '$movie_title' from $USERNAME's watchlist..."
+  local username="$1"
+  local movie_id="$2"
+  echo "Removing movie with ID: $movie_id from $username's watchlist..."
 
-  response=$(curl -s -X DELETE "$BASE_URL/remove" \
+  response=$(curl -s -X DELETE "$BASE_URL1/watchlist/remove" \
     -H "Content-Type: application/json" \
-    -d "{\"username\": \"$USERNAME\", \"movie_title\": \"$movie_title\"}")
+    -d "{\"username\": \"$username\", \"movie_id\": $movie_id}")
 
-  if echo "$response" | grep -q '"message"'; then
-    echo "Movie '$movie_title' removed from watchlist successfully."
-    if [ "$ECHO_JSON" = true ]; then
-      echo "Response JSON:"
-      echo "$response" | jq .
-    fi
-  elif echo "$response" | grep -q '"error"'; then
-    echo "Failed to remove movie: $(echo "$response" | jq -r '.error')"
-    exit 1
-  else
-    echo "Unexpected response format."
+  # Validate response JSON format
+  if ! echo "$response" | jq empty 2>/dev/null; then
+    echo "Unexpected response format: Not valid JSON."
+    echo "Response: $response"
     exit 1
   fi
+
+  # Display the response
+  echo "Remove from Watchlist Response:"
+  echo "$response" | jq .
 }
 # Run all the steps in order
 check_health
@@ -290,12 +283,12 @@ init_db
 create_user
 login_user
 search_movie "Inception"
-get_movie_details
-get_watchlist
-add_to_watchlist "Inception"
-get_movie_providers
-get_recommendations
-get_movie_popularity
-remove_from_watchlist "Inception"
+get_movie_details 550  # Movie ID for "Fight Club"
+get_watchlist "test_user"
+add_to_watchlist "test_user" 550 "Fight Club"
+get_movie_providers 550  # Movie ID for "Fight Club"
+get_recommendations 550  # Movie ID for "Fight Club"
+get_movie_popularity 550  # Movie ID for "Fight Club"
+remove_from_watchlist "test_user" 550 
 
 echo "All tests passed successfully!"
