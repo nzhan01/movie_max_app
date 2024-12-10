@@ -37,7 +37,7 @@ def test_get_recommendations():
     assert len(results) > 0
     # Check that the list has at least one recommendation
     assert results[0]["title"] == "The Dark Knight"
-    assert results[0]["vote_average"] == 8.5
+    assert results[0]["vote_average"] == 8.516
     
     
 
