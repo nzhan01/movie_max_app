@@ -146,38 +146,41 @@ class Watchlist(db.Model):
         watchlist = Watchlist.query.filter_by(user_id=user.id).all()
         logger.info("Retrieved watchlist for user '%s'.", username)
         return [
-            {"id": entry.id, "movie_title": entry.movie_title, "added_on": entry.added_on, "watched": entry.watched}
+            {"id": entry.id, "movie_id" : entry.movie_id, "movie_title": entry.movie_title, }
             for entry in watchlist
         ]
 
     @staticmethod
-    def remove_from_watchlist(username: str, movie_title: str) -> dict:
+    def remove_from_watchlist(username, movie_title):
         """
-        Removes a movie from the user's watchlist.
+        Remove a movie from the user's watchlist.
 
         Args:
-            username (str): The username of the user.
+            username (str): The username of the user removing the movie.
             movie_title (str): The title of the movie to be removed.
 
         Returns:
-            dict: A message indicating the movie was removed, with the movie title.
+            tuple: A tuple containing:
+                - dict: JSON-compatible dictionary with a success or error message.
+                - int: HTTP status code indicating success (200) or failure (400).
 
         Raises:
-            ValueError: If the user is not found or the movie is not in the user's watchlist.
+            ValueError: If the user is not found in the database.
+            ValueError: If the movie is not found in the user's watchlist.
         """
+        # Retrieve the user
         user = Users.query.filter_by(username=username).first()
         if not user:
-            logger.error("User '%s' not found.", username)
             raise ValueError(f"User '{username}' not found.")
 
-        entry = Watchlist.query.filter_by(user_id=user.id, movie_title=movie_title).first()
-        if not entry:
-            logger.error("Movie '%s' not found in %s's watchlist.", movie_title, username)
-            raise ValueError(f"Movie '{movie_title}' not found in the watchlist.")
+        # Find the movie in the user's watchlist
+        movie_entry = Watchlist.query.filter_by(user_id=user.id, movie_title=movie_title).first()
+        if not movie_entry:
+            raise ValueError(f"Movie '{movie_title}' not found in the user's watchlist.")
 
-        db.session.delete(entry)
+        # Remove the movie from the watchlist
+        db.session.delete(movie_entry)
         db.session.commit()
-        logger.info("Movie '%s' removed from %s's watchlist.", movie_title, username)
-        return {"message": "Movie removed from watchlist", "movie_title": movie_title}
-    
-    
+
+        # Return a success message
+        return {"message": f"'{movie_title}' has been removed from the watchlist"}, 200

@@ -82,10 +82,12 @@ def test_remove_from_watchlist(test_client, setup_user):
     watchlist = Watchlist.get_watchlist(username)
     assert len(watchlist) == 1
 
+    
     # Remove the movie
-    result = Watchlist.remove_from_watchlist(username, "Matrix")
-    assert result["message"] == "Movie removed from watchlist"
-    assert result["movie_title"] == "Matrix"
+    result, status_code = Watchlist.remove_from_watchlist(username, "Matrix")
+    assert result["message"] == "'Matrix' has been removed from the watchlist"
+    assert status_code == 200
+
 
     # Verify watchlist is empty again
     final_watchlist = Watchlist.get_watchlist(username)
@@ -96,7 +98,7 @@ def test_remove_non_existent_movie(test_client, setup_user):
     # Attempt to remove a movie that doesn't exist in the watchlist
     with pytest.raises(ValueError) as excinfo:
         Watchlist.remove_from_watchlist(username, "Avatar")
-    assert "not found in the watchlist" in str(excinfo.value)
+    assert "Movie 'Avatar' not found in the user's watchlist." in str(excinfo.value)
 
 def test_add_watchlist_invalid_user():
     # Add to watchlist for a user that doesn't exist

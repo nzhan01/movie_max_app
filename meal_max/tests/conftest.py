@@ -1,6 +1,7 @@
 import pytest
 from app import app, db
 from models.user_model import Users
+from models.movie_model import Movie
 
 @pytest.fixture
 def setup_user(test_client):

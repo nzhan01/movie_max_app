@@ -18,6 +18,7 @@ from db import db
 from utils.sql_utils import check_database_connection, check_table_exists
 from models.user_model import Users
 from models.watchlist_model import Watchlist
+from models.movie_model import Movie 
 
 # Load environment variables from .env file
 load_dotenv()
@@ -252,7 +253,7 @@ def logout():
 #
 ##########################################################
 
-
+'''
 @app.route('/api/search/movie', methods=['GET'])
 def search_movie(query):
     """
@@ -288,6 +289,7 @@ def search_movie(query):
         filtered_results = [
             {
                 "title": movie.get("title"),
+                "movie_id": movie.get("id"),
                 "release_date": movie.get("release_date"),
                 "overview": movie.get("overview"),
                 "vote_average": movie.get("vote_average")
@@ -421,9 +423,87 @@ def get_movie_details(movie_id):
     else:
         return jsonify({"error": "Failed to fetch movie details"}), response.status_code
 
+'''
 
 
 
+
+
+
+
+
+
+
+
+@app.route('/api/search/movie', methods=['GET'])
+def search_movie():
+    """
+    Search for a movie using the TMDB API.
+    """
+    try:
+        query = request.args.get('query')
+        if not query:
+            raise BadRequest("Query parameter is required")
+        
+        results = Movie.search_movie(query)
+        return jsonify({'status': 'success', 'results': results}), 200
+    except Exception as e:
+        app.logger.error(f"Error searching movie: {e}")
+        return make_response(jsonify({'error': str(e)}), 500)
+
+
+@app.route('/api/movie/<int:movie_id>/watch/providers', methods=['GET'])
+def get_movie_providers(movie_id):
+    """
+    Get watch providers for a movie.
+    """
+    try:
+        providers = Movie.get_movie_providers(movie_id)
+        return jsonify({'status': 'success', 'providers': providers}), 200
+    except Exception as e:
+        app.logger.error(f"Error getting watch providers: {e}")
+        return make_response(jsonify({'error': str(e)}), 500)
+
+
+@app.route('/api/movie/<int:movie_id>', methods=['GET'])
+def get_movie_details(movie_id):
+    """
+    Fetch movie details by ID.
+    """
+    try:
+        movie_details = Movie.get_movie_details(movie_id)
+        return jsonify({'status': 'success', 'movie': movie_details}), 200
+    except Exception as e:
+        app.logger.error(f"Error fetching movie details: {e}")
+        return make_response(jsonify({'error': str(e)}), 500)
+
+
+
+@app.route('/api/movie/<int:movie_id>/recommendations', methods=['GET'])
+def get_recommendations(movie_id):
+    """
+    Fetch recommended movies based on the given movie ID.
+    """
+    try:
+        recommendations = Movie.get_recommendations(movie_id)
+        return jsonify({'status': 'success', 'recommendations': recommendations}), 200
+    except Exception as e:
+        app.logger.error(f"Error fetching recommendations: {e}")
+        return make_response(jsonify({'error': str(e)}), 500)
+
+
+@app.route('/api/movie/popularity', methods=['GET'])
+def get_movie_popularity():
+    """
+    Fetch the most popular movies.
+    """
+    try:
+        page = request.args.get('page', default=1, type=int)
+        popular_movies = Movie.get_movie_popularity(page)
+        return jsonify({'status': 'success', 'popular_movies': popular_movies}), 200
+    except Exception as e:
+        app.logger.error(f"Error fetching popular movies: {e}")
+        return make_response(jsonify({'error': str(e)}), 500)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
