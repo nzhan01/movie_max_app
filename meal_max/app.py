@@ -493,7 +493,7 @@ def get_recommendations(movie_id):
 
 
 @app.route('/api/movie/popularity', methods=['GET'])
-def get_movie_popularity():
+def get_popular_movies():
     """
     Fetch the most popular movies.
     """

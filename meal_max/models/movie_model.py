@@ -1,7 +1,6 @@
 import logging
 from sqlalchemy.exc import IntegrityError
 from db import db
-from datetime import datetime
 from models.user_model import Users
 from utils.logger import configure_logger
 import os
@@ -16,10 +15,7 @@ load_dotenv()
 TMDB_READ_ACCESS_TOKEN = os.getenv("TMDB_READ_ACCESS_TOKEN")
 BASE_URL = "https://api.themoviedb.org/3"
 
-import requests
 
-BASE_URL = "https://api.themoviedb.org/3"
-TMDB_READ_ACCESS_TOKEN = "your_tmdb_token_here"  # Replace with your actual token
 class Movie():
     def search_movie(query):
         """Search for a movie using the TMDB API."""
@@ -101,9 +97,9 @@ class Movie():
             "genres": [genre["name"] for genre in data.get("genres", [])]
         }
 
-    def get_movie_popularity(movie_id):
-        """Fetch the popularity score of a specific movie."""
-        url = f"{BASE_URL}/movie/{movie_id}"
+    def get_popular_movies():
+        """Fetch the current popular movies."""
+        url = f"{BASE_URL}/movie/popular"
         headers = {
             "accept": "application/json",
             "Authorization": f"Bearer {TMDB_READ_ACCESS_TOKEN}"
@@ -111,8 +107,4 @@ class Movie():
         response = requests.get(url, headers=headers)
         response.raise_for_status()
         data = response.json()
-        return {
-            "movie_id": movie_id,
-            "title": data.get("title"),
-            "popularity": data.get("popularity")
-        }
+        return data
