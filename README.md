@@ -203,7 +203,7 @@ The Movie Max API provides endpoints for managing users, interacting with a watc
 - **Error Response:**
   ```json
   {
-      "error": "<error-message>"
+      "error": "<Error searching movie:>"
   }
   ```
 
@@ -226,11 +226,11 @@ The Movie Max API provides endpoints for managing users, interacting with a watc
 - **Error Response:**
   ```json
   {
-      "error": "<error-message>"
+      "error": "<Error fetching movie details:>"
   }
   ```
 
-### 11. Get Watch Providers
+### 11. Get Movie Providers
 - **URL:** `/api/movie/<int:movie_id>/watch/providers`
 - **Method:** `GET`
 - **Description:** Retrieves watch providers for a specific movie.
@@ -252,7 +252,7 @@ The Movie Max API provides endpoints for managing users, interacting with a watc
 - **Error Response:**
   ```json
   {
-      "error": "<error-message>"
+      "error": "<Error getting watch providers>"
   }
   ```
 
@@ -277,7 +277,7 @@ The Movie Max API provides endpoints for managing users, interacting with a watc
 - **Error Response:**
   ```json
   {
-      "error": "<error-message>"
+      "error": "<Error fetching recommendations>"
   }
   ```
 
@@ -304,7 +304,7 @@ The Movie Max API provides endpoints for managing users, interacting with a watc
 - **Error Response:**
   ```json
   {
-      "error": "<error-message>"
+      "error": "<Error fetching popular movies:>"
   }
   ```
 
