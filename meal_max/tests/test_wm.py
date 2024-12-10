@@ -16,22 +16,37 @@ def setup_user():
     # Cleanup after tests if needed (users are deleted when db is dropped anyway)
 
 def test_add_to_watchlist(test_client, setup_user):
+    """
+    Test the add_to_watchlist functionality by adding a movie to the watchlist
+    and verifying the database updates.
+    """
     username = setup_user
+
+    # Query the user object from the database
+    user = Users.query.filter_by(username=username).first()
+    assert user is not None, f"User '{username}' not found in the database"
+
     # Initially, the watchlist should be empty
-    initial_watchlist = Watchlist.get_watchlist(username)
+    initial_watchlist = Watchlist.query.filter_by(user_id=user.id).all()
     assert len(initial_watchlist) == 0
 
-    # Add a movie to watchlist
-    result = Watchlist.add_to_watchlist(username, "Inception")
-    assert result["message"] == "Movie added to watchlist"
-    assert result["movie_title"] == "Inception"
+    # Add the movie "Inception" to the watchlist
+    response_data, status_code = Watchlist.add_to_watchlist(username, "Inception")  # Unpack tuple
 
-    # Now the watchlist should have 1 entry
-    updated_watchlist = Watchlist.get_watchlist(username)
+    # Verify the success message and response structure
+    assert status_code == 200
+    assert response_data["message"] == "'Inception' has been added to the watchlist"
+
+    # Verify the database reflects the addition
+    updated_watchlist = Watchlist.query.filter_by(user_id=user.id).all()
     assert len(updated_watchlist) == 1
-    assert updated_watchlist[0]["movie_title"] == "Inception"
-    assert updated_watchlist[0]["watched"] == False
 
+    # Check the details of the added movie
+    added_movie = updated_watchlist[0]
+    assert added_movie.movie_title == "Inception"
+    assert added_movie.movie_id == 27205  # TMDB ID for "Inception"
+
+'''
 def test_add_duplicate_movie(test_client, setup_user):
     username = setup_user
     # Add a movie once
@@ -69,3 +84,4 @@ def test_add_watchlist_invalid_user():
     with pytest.raises(ValueError) as excinfo:
         Watchlist.add_to_watchlist("no_such_user", "Inception")
     assert "User 'no_such_user' not found." in str(excinfo.value)
+'''

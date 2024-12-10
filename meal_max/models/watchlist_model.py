@@ -5,13 +5,14 @@ from datetime import datetime
 from meal_max.models.user_model import Users
 from meal_max.utils.logger import configure_logger
 import os
+from dotenv import load_dotenv
 
 from flask import Flask, app, jsonify, make_response, Response, request
 import requests
 
 logger = logging.getLogger(__name__)
 configure_logger(logger)
-
+load_dotenv()
 TMDB_READ_ACCESS_TOKEN = os.getenv("TMDB_READ_ACCESS_TOKEN")
 BASE_URL = "https://api.themoviedb.org/3"
 
@@ -27,79 +28,79 @@ class Watchlist(db.Model):
 
     user = db.relationship('Users', back_populates='watchlist')
 
-
-    @staticmethod
-    def add_to_watchlist(username, title):
+    
+    def search_movie(query):
         """
-        Adds a movie to the user's watchlist by fetching its ID from the TMDB API.
+        Search for a movie using the TMDB API.
 
         Args:
-            username (str): Username of the user.
-            title (str): Title of the movie.
+            query (str): The search query for the movie.
 
         Returns:
-            Response object indicating success or failure.
+            List of filtered movie search results or an error message.
         """
-        movie_title = title.strip()  # Strip extra spaces
-        user = Users.query.filter_by(username=username).first()
-        if not user:
-            return jsonify({"error": f"User '{username}' not found"}), 404
-
-        user_id = user.id
-
-        # TMDB API call to search for the movie
-        url = f'https://api.themoviedb.org/3/search/movie'
-        params = {'api_key': TMDB_READ_ACCESS_TOKEN, 'query': movie_title}
+        url = f"{BASE_URL}/search/movie"
+        headers = {
+            "Authorization": f"Bearer {TMDB_READ_ACCESS_TOKEN}"  # Use the Read Access Token
+        }
+        params = {
+            "query": query,
+            "include_adult": "false",
+            "language": "en-US",
+            "page": 1
+        }
 
         try:
-            response = requests.get(url, params=params)
-            response.raise_for_status()  # Handle HTTP errors
+            # Make the API request
+            response = requests.get(url, headers=headers, params=params)
+            response.raise_for_status()  # Raise an exception for HTTP errors
+
+            data = response.json()
+
+            # Filter the results to include only required fields
+            filtered_results = [
+                {
+                    "title": movie.get("title"),
+                    "id": movie.get("id")
+                }
+                for movie in data.get("results", [])
+            ]
+
+            return filtered_results
+
         except requests.exceptions.RequestException as e:
             print(f"Error with TMDB API call: {e}")
-            return jsonify({"error": "Failed to fetch data from TMDB"}), 500
+            return []
+        
 
-        # Debugging: Log the response
-        try:
-            response_data = response.json()
-            print(f"Response JSON: {response_data}")  # Debugging log
-        except ValueError as e:
-            print(f"Invalid JSON response: {e}")
-            return jsonify({"error": "Invalid response from TMDB"}), 500
+    @staticmethod
+    def add_to_watchlist(username, movie_title):
+        """
+        Add a movie to the user's watchlist by searching TMDB and adding the movie's details to the database.
+        """
+        user = Users.query.filter_by(username=username).first()
+        if not user:
+            return {"error": "User not found"}, 404
 
-        # Check for expected structure
-        if not isinstance(response_data, dict) or "results" not in response_data:
-            return jsonify({"error": "Unexpected response format from TMDB"}), 500
-
-        # Extract results and check for matches
-        search_results = response_data.get("results", [])
-        print(f"Search Results: {search_results}")  # Debugging log
-
+        # Search for the movie in TMDB
+        search_results = Watchlist.search_movie(movie_title)
         if not search_results:
-            return jsonify({"error": f"No results found for '{movie_title}'"}), 404
+            return {"error": "Movie not found or API error"}, 400
 
-        # Use list comprehension to find a matching movie by title
-        matching_movie = next(
-            (result for result in search_results if result.get("title", "").lower() == movie_title.lower()), None
-        )
+        # Get the first matching movie
+        movie = search_results[0]
 
-        if matching_movie:
-            movie_id = matching_movie.get("id")
-            if movie_id:
-                # Add to the watchlist
-                try:
-                    entry = Watchlist(
-                        user_id=user_id,
-                        movie_id=movie_id,
-                        movie_title=matching_movie.get("title", movie_title),
-                    )
-                    db.session.add(entry)
-                    db.session.commit()
-                    return jsonify({"message": f"'{movie_title}' has been added to the watchlist"}), 200
-                except Exception as e:
-                    print(f"Database error: {e}")  # Debugging log
-                    return jsonify({"error": str(e)}), 500
+        # Check if the movie is already in the watchlist
+        existing_entry = Watchlist.query.filter_by(user_id=user.id, movie_id=movie["id"]).first()
+        if existing_entry:
+            return {"error": "Movie already in watchlist"}, 400
 
-        return jsonify({"error": f"No exact match found for '{movie_title}'"}), 404
+        # Add the movie to the watchlist
+        new_entry = Watchlist(user_id=user.id, movie_title=movie["title"], movie_id=movie["id"])
+        db.session.add(new_entry)
+        db.session.commit()
+
+        return {"message": f"'{movie['title']}' has been added to the watchlist"}, 200
 
     '''
     @staticmethod
