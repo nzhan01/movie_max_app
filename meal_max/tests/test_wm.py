@@ -3,8 +3,22 @@ from meal_max.models.user_model import Users
 from meal_max.models.watchlist_model import Watchlist
 from meal_max.db.models import db
 
+
+@pytest.fixture(scope="function")
+def test_db():
+    """
+    Fixture to reset the database before each test.
+    Drops all tables and recreates them.
+    """
+    db.drop_all()  # Drop all tables
+    db.create_all()  # Recreate all tables
+    db.session.commit()  # Commit changes to apply the reset
+    yield
+    db.session.remove()  # Remove the session after the test
+
+
 @pytest.fixture
-def setup_user():
+def setup_user(test_db):
     """
     This fixture creates a test user anpy d yields their username. 
     After the test, it rolls back any changes.
@@ -17,8 +31,7 @@ def setup_user():
 
 def test_add_to_watchlist(test_client, setup_user):
     """
-    Test the add_to_watchlist functionality by adding a movie to the watchlist
-    and verifying the database updates.
+    Test the add_to_watchlist functionality.
     """
     username = setup_user
 
@@ -31,7 +44,7 @@ def test_add_to_watchlist(test_client, setup_user):
     assert len(initial_watchlist) == 0
 
     # Add the movie "Inception" to the watchlist
-    response_data, status_code = Watchlist.add_to_watchlist(username, "Inception")  # Unpack tuple
+    response_data, status_code = Watchlist.add_to_watchlist(username, "Inception")
 
     # Verify the success message and response structure
     assert status_code == 200
@@ -44,17 +57,23 @@ def test_add_to_watchlist(test_client, setup_user):
     # Check the details of the added movie
     added_movie = updated_watchlist[0]
     assert added_movie.movie_title == "Inception"
-    assert added_movie.movie_id == 27205  # TMDB ID for "Inception"
+    assert added_movie.movie_id == 27205
 
-'''
+
+
 def test_add_duplicate_movie(test_client, setup_user):
+    """
+    Test that attempting to add a duplicate movie to the watchlist raises a ValueError.
+    """
     username = setup_user
     # Add a movie once
     Watchlist.add_to_watchlist(username, "Inception")
+
     # Adding it again should raise a ValueError
     with pytest.raises(ValueError) as excinfo:
         Watchlist.add_to_watchlist(username, "Inception")
-    assert "already exists in the watchlist" in str(excinfo.value)
+    assert "Movie already in watchlist" in str(excinfo.value)
+
 
 def test_remove_from_watchlist(test_client, setup_user):
     username = setup_user
@@ -84,4 +103,3 @@ def test_add_watchlist_invalid_user():
     with pytest.raises(ValueError) as excinfo:
         Watchlist.add_to_watchlist("no_such_user", "Inception")
     assert "User 'no_such_user' not found." in str(excinfo.value)
-'''

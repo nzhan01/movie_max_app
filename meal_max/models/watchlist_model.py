@@ -77,15 +77,32 @@ class Watchlist(db.Model):
     def add_to_watchlist(username, movie_title):
         """
         Add a movie to the user's watchlist by searching TMDB and adding the movie's details to the database.
+            
+
+        Args:
+            username (str): The username of the user adding the movie.
+            movie_title (str): The title of the movie to be added.
+
+        Returns:
+            tuple: A tuple containing:
+                - dict: JSON-compatible dictionary with a success message.
+                - int: HTTP status code indicating success (200).
+
+        Raises:
+            ValueError: If the user is not found in the database.
+            ValueError: If the movie title yields no results or an API error occurs.
+            ValueError: If the movie is already in the user's watchlist.
+
+        
         """
         user = Users.query.filter_by(username=username).first()
         if not user:
-            return {"error": "User not found"}, 404
+            raise ValueError(f"User '{username}' not found.")
 
         # Search for the movie in TMDB
         search_results = Watchlist.search_movie(movie_title)
         if not search_results:
-            return {"error": "Movie not found or API error"}, 400
+            raise ValueError(f"Movie '{movie_title}' not found or API error.")
 
         # Get the first matching movie
         movie = search_results[0]
@@ -93,76 +110,15 @@ class Watchlist(db.Model):
         # Check if the movie is already in the watchlist
         existing_entry = Watchlist.query.filter_by(user_id=user.id, movie_id=movie["id"]).first()
         if existing_entry:
-            return {"error": "Movie already in watchlist"}, 400
+            raise ValueError("Movie already in watchlist")
 
         # Add the movie to the watchlist
         new_entry = Watchlist(user_id=user.id, movie_title=movie["title"], movie_id=movie["id"])
         db.session.add(new_entry)
         db.session.commit()
 
+        # Return a response tuple for compatibility with tests
         return {"message": f"'{movie['title']}' has been added to the watchlist"}, 200
-
-    '''
-    @staticmethod
-    def add_to_watchlist(username,title):
-        """
-        Adds a movie to the user's watchlist.
-
-        Args:
-            user_id (int): ID of the user.
-            title (str): Title of the movie.
-            
-        Returns:
-            None
-
-        Raises:
-            IntegrityError: If the movie cannot be added to the watchlist due to a database error.
-        """
-
-
-        
-        movie_title = title
-        user = Users.query.filter_by(username=username).first()
-        if not user:
-            return jsonify({"error": f"User '{username}' not found"}), 404
-
-        user_id = user.id
-
-        # TMDB API call to search for the movie
-        url = f'https://api.themoviedb.org/3/search/movie'
-        params = {'api_key': TMDB_READ_ACCESS_TOKEN, 'query': movie_title}
-
-        response = requests.get(url, params=params)
-        if response.status_code != 200:
-            return jsonify({"error": "Failed to fetch data from TMDB"}), 500
-
-        search_results = response.json().get('results', [])
-        if not search_results:
-            return jsonify({"error": f"No results found for '{movie_title}'"}), 404
-
-        # Find the first result with the exact movie title
-        for result in search_results:
-            if result['title'].lower() == movie_title.lower():
-                movie_id = result['id']
-                
-
-                # Add the movie to the watchlist
-                try:
-                    
-                    entry = Watchlist(
-                        user_id=user_id,
-                        movie_id=movie_id,
-                        movie_title=title,
-                    )
-                    db.session.add(entry)
-                    db.session.commit()
-                    return jsonify({"message": f"'{movie_title}' has been added to the watchlist"}), 200
-                except Exception as e:
-                    return jsonify({"error": str(e)}), 500
-
-        # If no exact match is found
-        return jsonify({"error": f"No exact match found for '{movie_title}'"}), 404
-    '''       
 
     @staticmethod
     def get_watchlist(username: str) -> list:
