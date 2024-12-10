@@ -5,6 +5,11 @@ The Movie Max API provides endpoints for managing users, interacting with a watc
 
 ---
 
+Unit Tests and Smoketests links
+
+Google doc with screenshots of unit tests
+https://docs.google.com/document/d/1ODJwDcbWrOs2NB70VWrl8NrUR4SNIbCaSKmT9Ij_Ay0/edit?usp=sharing
+
 ## Root Routes
 
 ### 1. Root Endpoint
@@ -309,9 +314,4 @@ The Movie Max API provides endpoints for managing users, interacting with a watc
   ```
 
 ---
-
-## Notes
-- All API endpoints log relevant information using the configured logger.
-- Ensure the `TMDB_READ_ACCESS_TOKEN` is set in the environment variables for TMDB integration to work properly.
-- Error responses include detailed error messages for debugging purposes.
 
