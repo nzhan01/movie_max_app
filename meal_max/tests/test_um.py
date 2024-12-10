@@ -1,6 +1,6 @@
 import pytest
-from meal_max.models.user_model import Users
-from meal_max.db.models import db
+from models.user_model import Users
+from db.models import db
 
 def test_create_user(test_client):
     response = test_client.post('/api/create-user', json={

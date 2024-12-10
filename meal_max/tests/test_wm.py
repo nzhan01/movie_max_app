@@ -1,7 +1,7 @@
 import pytest
-from meal_max.models.user_model import Users
-from meal_max.models.watchlist_model import Watchlist
-from meal_max.db.models import db
+from models.user_model import Users
+from models.watchlist_model import Watchlist
+from db.models import db
 
 
 @pytest.fixture(scope="function")

@@ -1,6 +1,6 @@
 import pytest
-from meal_max.app import app, db
-from meal_max.models.user_model import Users
+from app import app, db
+from models.user_model import Users
 
 @pytest.fixture
 def setup_user(test_client):
