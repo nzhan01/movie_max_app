@@ -1,0 +1,1565 @@
+Checking health status...
+Service is healthy.
+Initializing the database...
+Database initialized successfully.
+Creating a new user...
+User created successfully.
+Logging in user...
+User logged in successfully.
+Searching for movie: Inception using TMDB API...
+Search successful for movie: Inception.
+Top result:
+{
+  "adult": false,
+  "backdrop_path": "/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg",
+  "genre_ids": [
+    28,
+    878,
+    12
+  ],
+  "id": 27205,
+  "original_language": "en",
+  "original_title": "Inception",
+  "overview": "Cobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception\", the implantation of another person's idea into a target's subconscious.",
+  "popularity": 122.2,
+  "poster_path": "/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg",
+  "release_date": "2010-07-15",
+  "title": "Inception",
+  "video": false,
+  "vote_average": 8.4,
+  "vote_count": 36636
+}
+Fetching details for movie ID: 550...
+Movie Details:
+{
+  "adult": false,
+  "backdrop_path": "/hZkgoQYus5vegHoetLkCJzb17zJ.jpg",
+  "belongs_to_collection": null,
+  "budget": 63000000,
+  "genres": [
+    {
+      "id": 18,
+      "name": "Drama"
+    }
+  ],
+  "homepage": "http://www.foxmovies.com/movies/fight-club",
+  "id": 550,
+  "imdb_id": "tt0137523",
+  "origin_country": [
+    "US"
+  ],
+  "original_language": "en",
+  "original_title": "Fight Club",
+  "overview": "A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground \"fight clubs\" forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion.",
+  "popularity": 208.31,
+  "poster_path": "/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
+  "production_companies": [
+    {
+      "id": 711,
+      "logo_path": "/tEiIH5QesdheJmDAqQwvtN60727.png",
+      "name": "Fox 2000 Pictures",
+      "origin_country": "US"
+    },
+    {
+      "id": 508,
+      "logo_path": "/7cxRWzi4LsVm4Utfpr1hfARNurT.png",
+      "name": "Regency Enterprises",
+      "origin_country": "US"
+    },
+    {
+      "id": 4700,
+      "logo_path": "/A32wmjrs9Psf4zw0uaixF0GXfxq.png",
+      "name": "The Linson Company",
+      "origin_country": "US"
+    },
+    {
+      "id": 25,
+      "logo_path": "/qZCc1lty5FzX30aOCVRBLzaVmcp.png",
+      "name": "20th Century Fox",
+      "origin_country": "US"
+    },
+    {
+      "id": 20555,
+      "logo_path": "/hD8yEGUBlHOcfHYbujp71vD8gZp.png",
+      "name": "Taurus Film",
+      "origin_country": "DE"
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "DE",
+      "name": "Germany"
+    },
+    {
+      "iso_3166_1": "US",
+      "name": "United States of America"
+    }
+  ],
+  "release_date": "1999-10-15",
+  "revenue": 100853753,
+  "runtime": 139,
+  "spoken_languages": [
+    {
+      "english_name": "English",
+      "iso_639_1": "en",
+      "name": "English"
+    }
+  ],
+  "status": "Released",
+  "tagline": "Mischief. Mayhem. Soap.",
+  "title": "Fight Club",
+  "video": false,
+  "vote_average": 8.437,
+  "vote_count": 29479
+}
+Fetching watchlist for user: test_user...
+User Watchlist:
+{
+  "error": "User 'test_user' not found"
+}
+Adding movie: Fight Club to test_user's watchlist...
+Add to Watchlist Response:
+{
+  "error": "User 'test_user' not found"
+}
+Fetching providers for movie ID:
+Movie Providers:
+    "MK": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=MK",
+      "buy": [
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 8
+        }
+      ]
+    },
+    "MT": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=MT",
+      "buy": [
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 8
+        }
+      ],
+      "rent": [
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 8
+        }
+      ]
+    },
+    "MU": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=MU",
+      "rent": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 13
+        }
+      ],
+      "buy": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 13
+        }
+      ]
+    },
+    "MX": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=MX",
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 0
+        }
+      ]
+    },
+    "MY": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=MY",
+      "flatrate": [
+        {
+          "logo_path": "/zdTSUEVZFXp3E0EkOMGN99QPVJp.jpg",
+          "provider_id": 122,
+          "provider_name": "Hotstar",
+          "display_priority": 0
+        }
+      ]
+    },
+    "MZ": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=MZ",
+      "rent": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 14
+        }
+      ],
+      "buy": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 14
+        }
+      ]
+    },
+    "NI": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=NI",
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 2
+        },
+        {
+          "logo_path": "/qGXUKTheetVXYsSs9ehYLm7rzp8.jpg",
+          "provider_id": 119,
+          "provider_name": "Amazon Prime Video",
+          "display_priority": 4
+        }
+      ]
+    },
+    "NL": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=NL",
+      "rent": [
+        {
+          "logo_path": "/lnOkJKyFl87mzqNebAbE8ADdHoB.jpg",
+          "provider_id": 71,
+          "provider_name": "Pathé Thuis",
+          "display_priority": 7
+        },
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 9
+        },
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 13
+        },
+        {
+          "logo_path": "/5vfrJQgNe9UnHVgVNAwZTy0Jo9o.jpg",
+          "provider_id": 68,
+          "provider_name": "Microsoft Store",
+          "display_priority": 14
+        },
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 15
+        },
+        {
+          "logo_path": "/seGSXajazLMCKGB5hnRCidtjay1.jpg",
+          "provider_id": 10,
+          "provider_name": "Amazon Video",
+          "display_priority": 37
+        },
+        {
+          "logo_path": "/651I5dLHpxDUePZcNkYTDcARTeE.jpg",
+          "provider_id": 697,
+          "provider_name": "meJane",
+          "display_priority": 43
+        }
+      ],
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 2
+        },
+        {
+          "logo_path": "/nzjqsR28PVVp5GJAlHtbBArNKqN.jpg",
+          "provider_id": 563,
+          "provider_name": "KPN",
+          "display_priority": 32
+        }
+      ],
+      "buy": [
+        {
+          "logo_path": "/lnOkJKyFl87mzqNebAbE8ADdHoB.jpg",
+          "provider_id": 71,
+          "provider_name": "Pathé Thuis",
+          "display_priority": 7
+        },
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 9
+        },
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 13
+        },
+        {
+          "logo_path": "/5vfrJQgNe9UnHVgVNAwZTy0Jo9o.jpg",
+          "provider_id": 68,
+          "provider_name": "Microsoft Store",
+          "display_priority": 14
+        },
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 15
+        },
+        {
+          "logo_path": "/seGSXajazLMCKGB5hnRCidtjay1.jpg",
+          "provider_id": 10,
+          "provider_name": "Amazon Video",
+          "display_priority": 37
+        }
+      ]
+    },
+    "NO": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=NO",
+      "rent": [
+        {
+          "logo_path": "/bnoTnLzz2MAhK3Yc6P9KXe5drIz.jpg",
+          "provider_id": 76,
+          "provider_name": "Viaplay",
+          "display_priority": 4
+        },
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 5
+        },
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 14
+        },
+        {
+          "logo_path": "/auWzottqpExOHUlJwDZ4DvdHGoL.jpg",
+          "provider_id": 423,
+          "provider_name": "Blockbuster",
+          "display_priority": 16
+        },
+        {
+          "logo_path": "/sNmIwrniZZORvNJOmEuWGhwBJNf.jpg",
+          "provider_id": 426,
+          "provider_name": "SF Anytime",
+          "display_priority": 17
+        }
+      ],
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 0
+        }
+      ],
+      "buy": [
+        {
+          "logo_path": "/bnoTnLzz2MAhK3Yc6P9KXe5drIz.jpg",
+          "provider_id": 76,
+          "provider_name": "Viaplay",
+          "display_priority": 4
+        },
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 5
+        },
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 8
+        },
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 14
+        },
+        {
+          "logo_path": "/auWzottqpExOHUlJwDZ4DvdHGoL.jpg",
+          "provider_id": 423,
+          "provider_name": "Blockbuster",
+          "display_priority": 16
+        },
+        {
+          "logo_path": "/sNmIwrniZZORvNJOmEuWGhwBJNf.jpg",
+          "provider_id": 426,
+          "provider_name": "SF Anytime",
+          "display_priority": 17
+        }
+      ]
+    },
+    "NZ": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=NZ",
+      "buy": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 4
+        },
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 6
+        },
+        {
+          "logo_path": "/5vfrJQgNe9UnHVgVNAwZTy0Jo9o.jpg",
+          "provider_id": 68,
+          "provider_name": "Microsoft Store",
+          "display_priority": 9
+        }
+      ],
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 0
+        }
+      ]
+    },
+    "PE": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=PE",
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 0
+        }
+      ],
+      "buy": [
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 4
+        }
+      ],
+      "rent": [
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 4
+        }
+      ]
+    },
+    "PH": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=PH",
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 29
+        }
+      ]
+    },
+    "PK": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=PK",
+      "flatrate": [
+        {
+          "logo_path": "/pbpMk2JmcoNnQwx5JGpXngfoWtp.jpg",
+          "provider_id": 8,
+          "provider_name": "Netflix",
+          "display_priority": 0
+        }
+      ]
+    },
+    "PL": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=PL",
+      "ads": [
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 37
+        }
+      ],
+      "buy": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 2
+        },
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 4
+        },
+        {
+          "logo_path": "/pTnn5JwWr4p3pG8H6VrpiQo7Vs0.jpg",
+          "provider_id": 192,
+          "provider_name": "YouTube",
+          "display_priority": 8
+        },
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 37
+        }
+      ],
+      "flatrate": [
+        {
+          "logo_path": "/fbveJTcro9Xw2KuPIIoPPePHiwy.jpg",
+          "provider_id": 701,
+          "provider_name": "FilmBox+",
+          "display_priority": 26
+        }
+      ],
+      "rent": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 2
+        },
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 37
+        }
+      ]
+    },
+    "PS": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=PS",
+      "flatrate": [
+        {
+          "logo_path": "/kC6JTo59Gj6I4vJPyBAYGh0sKAE.jpg",
+          "provider_id": 629,
+          "provider_name": "OSN",
+          "display_priority": 9
+        }
+      ]
+    },
+    "PT": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=PT",
+      "rent": [
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 5
+        },
+        {
+          "logo_path": "/pTnn5JwWr4p3pG8H6VrpiQo7Vs0.jpg",
+          "provider_id": 192,
+          "provider_name": "YouTube",
+          "display_priority": 7
+        },
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 8
+        }
+      ],
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 0
+        }
+      ],
+      "buy": [
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 5
+        },
+        {
+          "logo_path": "/pTnn5JwWr4p3pG8H6VrpiQo7Vs0.jpg",
+          "provider_id": 192,
+          "provider_name": "YouTube",
+          "display_priority": 7
+        },
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 8
+        }
+      ]
+    },
+    "PY": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=PY",
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 2
+        }
+      ]
+    },
+    "RS": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=RS",
+      "buy": [
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 8
+        }
+      ]
+    },
+    "SA": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=SA",
+      "rent": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 1
+        },
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 3
+        }
+      ],
+      "flatrate": [
+        {
+          "logo_path": "/kC6JTo59Gj6I4vJPyBAYGh0sKAE.jpg",
+          "provider_id": 629,
+          "provider_name": "OSN",
+          "display_priority": 20
+        }
+      ],
+      "buy": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 1
+        },
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 3
+        }
+      ]
+    },
+    "SE": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=SE",
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 0
+        }
+      ],
+      "rent": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 4
+        },
+        {
+          "logo_path": "/bnoTnLzz2MAhK3Yc6P9KXe5drIz.jpg",
+          "provider_id": 76,
+          "provider_name": "Viaplay",
+          "display_priority": 6
+        },
+        {
+          "logo_path": "/5vfrJQgNe9UnHVgVNAwZTy0Jo9o.jpg",
+          "provider_id": 68,
+          "provider_name": "Microsoft Store",
+          "display_priority": 8
+        },
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 15
+        },
+        {
+          "logo_path": "/auWzottqpExOHUlJwDZ4DvdHGoL.jpg",
+          "provider_id": 423,
+          "provider_name": "Blockbuster",
+          "display_priority": 16
+        },
+        {
+          "logo_path": "/sNmIwrniZZORvNJOmEuWGhwBJNf.jpg",
+          "provider_id": 426,
+          "provider_name": "SF Anytime",
+          "display_priority": 17
+        }
+      ],
+      "buy": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 4
+        },
+        {
+          "logo_path": "/bnoTnLzz2MAhK3Yc6P9KXe5drIz.jpg",
+          "provider_id": 76,
+          "provider_name": "Viaplay",
+          "display_priority": 6
+        },
+        {
+          "logo_path": "/5vfrJQgNe9UnHVgVNAwZTy0Jo9o.jpg",
+          "provider_id": 68,
+          "provider_name": "Microsoft Store",
+          "display_priority": 8
+        },
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 9
+        },
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 15
+        },
+        {
+          "logo_path": "/auWzottqpExOHUlJwDZ4DvdHGoL.jpg",
+          "provider_id": 423,
+          "provider_name": "Blockbuster",
+          "display_priority": 16
+        },
+        {
+          "logo_path": "/sNmIwrniZZORvNJOmEuWGhwBJNf.jpg",
+          "provider_id": 426,
+          "provider_name": "SF Anytime",
+          "display_priority": 17
+        }
+      ]
+    },
+    "SG": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=SG",
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 2
+        }
+      ]
+    },
+    "SI": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=SI",
+      "buy": [
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 8
+        },
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 25
+        }
+      ]
+    },
+    "SK": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=SK",
+      "buy": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 4
+        },
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 6
+        },
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 39
+        }
+      ],
+      "rent": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 4
+        }
+      ]
+    },
+    "SM": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=SM",
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 25
+        }
+      ]
+    },
+    "SV": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=SV",
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 27
+        }
+      ]
+    },
+    "TD": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=TD",
+      "flatrate": [
+        {
+          "logo_path": "/kC6JTo59Gj6I4vJPyBAYGh0sKAE.jpg",
+          "provider_id": 629,
+          "provider_name": "OSN",
+          "display_priority": 1
+        }
+      ]
+    },
+    "TH": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=TH",
+      "flatrate": [
+        {
+          "logo_path": "/zdTSUEVZFXp3E0EkOMGN99QPVJp.jpg",
+          "provider_id": 122,
+          "provider_name": "Hotstar",
+          "display_priority": 0
+        }
+      ]
+    },
+    "TR": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=TR",
+      "rent": [
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 7
+        },
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 8
+        }
+      ],
+      "buy": [
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 7
+        },
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 8
+        }
+      ],
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 0
+        },
+        {
+          "logo_path": "/c8ryDZroFQtuyRVPBwXq5PLpTWV.jpg",
+          "provider_id": 1904,
+          "provider_name": "TV+",
+          "display_priority": 11
+        }
+      ]
+    },
+    "TT": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=TT",
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 14
+        }
+      ]
+    },
+    "TW": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=TW",
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 2
+        }
+      ]
+    },
+    "UA": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=UA",
+      "rent": [
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 4
+        }
+      ],
+      "buy": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 2
+        },
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 3
+        },
+        {
+          "logo_path": "/bZvc9dXrXNly7cA0V4D9pR8yJwm.jpg",
+          "provider_id": 35,
+          "provider_name": "Rakuten TV",
+          "display_priority": 4
+        }
+      ]
+    },
+    "UG": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=UG",
+      "buy": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 14
+        }
+      ],
+      "rent": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 14
+        }
+      ]
+    },
+    "US": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=US",
+      "buy": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 5
+        },
+        {
+          "logo_path": "/seGSXajazLMCKGB5hnRCidtjay1.jpg",
+          "provider_id": 10,
+          "provider_name": "Amazon Video",
+          "display_priority": 15
+        },
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 16
+        },
+        {
+          "logo_path": "/pTnn5JwWr4p3pG8H6VrpiQo7Vs0.jpg",
+          "provider_id": 192,
+          "provider_name": "YouTube",
+          "display_priority": 17
+        },
+        {
+          "logo_path": "/19fkcOz0xeUgCVW8tO85uOYnYK9.jpg",
+          "provider_id": 7,
+          "provider_name": "Fandango At Home",
+          "display_priority": 37
+        },
+        {
+          "logo_path": "/5vfrJQgNe9UnHVgVNAwZTy0Jo9o.jpg",
+          "provider_id": 68,
+          "provider_name": "Microsoft Store",
+          "display_priority": 46
+        }
+      ],
+      "rent": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 5
+        },
+        {
+          "logo_path": "/seGSXajazLMCKGB5hnRCidtjay1.jpg",
+          "provider_id": 10,
+          "provider_name": "Amazon Video",
+          "display_priority": 15
+        },
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 16
+        },
+        {
+          "logo_path": "/pTnn5JwWr4p3pG8H6VrpiQo7Vs0.jpg",
+          "provider_id": 192,
+          "provider_name": "YouTube",
+          "display_priority": 17
+        },
+        {
+          "logo_path": "/19fkcOz0xeUgCVW8tO85uOYnYK9.jpg",
+          "provider_id": 7,
+          "provider_name": "Fandango At Home",
+          "display_priority": 37
+        },
+        {
+          "logo_path": "/5vfrJQgNe9UnHVgVNAwZTy0Jo9o.jpg",
+          "provider_id": 68,
+          "provider_name": "Microsoft Store",
+          "display_priority": 46
+        }
+      ],
+      "flatrate": [
+        {
+          "logo_path": "/bxBlRPEPpMVDc4jMhSrTf2339DW.jpg",
+          "provider_id": 15,
+          "provider_name": "Hulu",
+          "display_priority": 6
+        }
+      ]
+    },
+    "UY": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=UY",
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 27
+        }
+      ]
+    },
+    "VE": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=VE",
+      "rent": [
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 3
+        }
+      ],
+      "buy": [
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 3
+        }
+      ],
+      "flatrate": [
+        {
+          "logo_path": "/97yvRBw1GzX7fXprcF80er19ot.jpg",
+          "provider_id": 337,
+          "provider_name": "Disney Plus",
+          "display_priority": 1
+        }
+      ]
+    },
+    "ZA": {
+      "link": "https://www.themoviedb.org/movie/550-fight-club/watch?locale=ZA",
+      "buy": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 2
+        },
+        {
+          "logo_path": "/8z7rC8uIDaTM91X0ZfkRf04ydj2.jpg",
+          "provider_id": 3,
+          "provider_name": "Google Play Movies",
+          "display_priority": 3
+        }
+      ],
+      "rent": [
+        {
+          "logo_path": "/9ghgSC0MA082EL6HLCW3GalykFD.jpg",
+          "provider_id": 2,
+          "provider_name": "Apple TV",
+          "display_priority": 2
+        }
+      ]
+    }
+
+Fetching recommendations for movie ID: 550...
+Movie Recommendations:
+{
+  "page": 1,
+  "results": [
+    {
+      "backdrop_path": "/suaEOtk1N1sgg2MTM7oZd2cfVp3.jpg",
+      "id": 680,
+      "title": "Pulp Fiction",
+      "original_title": "Pulp Fiction",
+      "overview": "A burger-loving hit man, his philosophical partner, a drug-addled gangster's moll and a washed-up boxer converge in this sprawling, comedic crime caper. Their adventures unfurl in three stories that ingeniously trip back and forth in time.",
+      "poster_path": "/d5iIlFn5s0ImszYzBPb8JPIfbXD.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        53,
+        80
+      ],
+      "popularity": 128.141,
+      "release_date": "1994-09-10",
+      "video": false,
+      "vote_average": 8.487,
+      "vote_count": 27969
+    },
+    {
+      "backdrop_path": "/p1PLSI5Nw2krGxD7X4ulul1tDAk.jpg",
+      "id": 807,
+      "title": "Se7en",
+      "original_title": "Se7en",
+      "overview": "Two homicide detectives are on a desperate hunt for a serial killer whose crimes are based on the \"seven deadly sins\" in this dark and haunting film that takes viewers from the tortured remains of one victim to the next. The seasoned Det. Sommerset researches each sin in an effort to get inside the killer's mind, while his novice partner, Mills, scoffs at his efforts to unravel the case.",
+      "poster_path": "/191nKfP0ehp3uIvWqgPbFmI4lv9.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        80,
+        9648,
+        53
+      ],
+      "popularity": 111.027,
+      "release_date": "1995-09-22",
+      "video": false,
+      "vote_average": 8.375,
+      "vote_count": 21041
+    },
+    {
+      "backdrop_path": "/ghgfzbEV7kbpbi1O8eIILKVXEA8.jpg",
+      "id": 13,
+      "title": "Forrest Gump",
+      "original_title": "Forrest Gump",
+      "overview": "A man with a low IQ has accomplished great things in his life and been present during significant historic events—in each case, far exceeding what anyone imagined he could do. But despite all he has achieved, his one true love eludes him.",
+      "poster_path": "/arw2vcBveWOVZr6pxd9XTd1TdQa.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        35,
+        18,
+        10749
+      ],
+      "popularity": 134.767,
+      "release_date": "1994-06-23",
+      "video": false,
+      "vote_average": 8.5,
+      "vote_count": 27494
+    },
+    {
+      "backdrop_path": "/8UiZP1dTIPRYkIcwR84zZTwgKpZ.jpg",
+      "id": 59967,
+      "title": "Looper",
+      "original_title": "Looper",
+      "overview": "In the year 2044, time travel has not yet been invented but in 30 years it will have been. When the mob wants to get rid of someone, they will send their target into the past where a looper, a hired gun, like Joe is waiting to mop up. Joe is getting rich and life is good until the day the mob decides to close the loop, sending back Joe's future self for assassination.",
+      "poster_path": "/sNjL6SqErDBE8OUZlrDLkexfsCj.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        28,
+        53,
+        878
+      ],
+      "popularity": 26.47,
+      "release_date": "2012-09-26",
+      "video": false,
+      "vote_average": 6.887,
+      "vote_count": 10134
+    },
+    {
+      "backdrop_path": "/zaPzgyxua4ieJUKYR1WSX6f5VMQ.jpg",
+      "id": 603,
+      "title": "The Matrix",
+      "original_title": "The Matrix",
+      "overview": "Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.",
+      "poster_path": "/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        28,
+        878
+      ],
+      "popularity": 102.517,
+      "release_date": "1999-03-31",
+      "video": false,
+      "vote_average": 8.218,
+      "vote_count": 25690
+    },
+    {
+      "backdrop_path": "/qUq3QTr2KLvGIcN0GaaaYx9bbyH.jpg",
+      "id": 510,
+      "title": "One Flew Over the Cuckoo's Nest",
+      "original_title": "One Flew Over the Cuckoo's Nest",
+      "overview": "A petty criminal fakes insanity to serve his sentence in a mental ward rather than prison. He soon finds himself as a leader to the other patients—and an enemy to the cruel, domineering nurse who runs the ward.",
+      "poster_path": "/kjWsMh72V6d8KRLV4EOoSJLT1H7.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        18
+      ],
+      "popularity": 43.834,
+      "release_date": "1975-11-19",
+      "video": false,
+      "vote_average": 8.415,
+      "vote_count": 10460
+    },
+    {
+      "backdrop_path": "/7Wev9JMo6R5XAfz2KDvXb7oPMmy.jpg",
+      "id": 77,
+      "title": "Memento",
+      "original_title": "Memento",
+      "overview": "Leonard Shelby is tracking down the man who raped and murdered his wife. The difficulty of locating his wife's killer, however, is compounded by the fact that he suffers from a rare, untreatable form of short-term memory loss. Although he can recall details of life before his accident, Leonard cannot remember what happened fifteen minutes ago, where he's going, or why.",
+      "poster_path": "/nWtySDlffTfwAa0rSfq61o33ZXV.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        9648,
+        53
+      ],
+      "popularity": 41.662,
+      "release_date": "2000-10-11",
+      "video": false,
+      "vote_average": 8.18,
+      "vote_count": 14854
+    },
+    {
+      "backdrop_path": "/mBdZ5rOB8RxluHwBfS64ZzaVanB.jpg",
+      "id": 73,
+      "title": "American History X",
+      "original_title": "American History X",
+      "overview": "Derek Vineyard is paroled after serving 3 years in prison for killing two African-American men. Through his brother, Danny Vineyard's narration, we learn that before going to prison, Derek was a skinhead and the leader of a violent white supremacist gang that committed acts of racial crime throughout L.A. and his actions greatly influenced Danny. Reformed and fresh out of prison, Derek severs contact with the gang and becomes determined to keep Danny from going down the same violent path as he did.",
+      "poster_path": "/euypWkaYFOLW3e5rLIcTAjWnhhT.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        18
+      ],
+      "popularity": 39.09,
+      "release_date": "1998-07-01",
+      "video": false,
+      "vote_average": 8.3,
+      "vote_count": 11552
+    },
+    {
+      "backdrop_path": "/x2RS3uTcsJJ9IfjNPcgDmukoEcQ.jpg",
+      "id": 120,
+      "title": "The Lord of the Rings: The Fellowship of the Ring",
+      "original_title": "The Lord of the Rings: The Fellowship of the Ring",
+      "overview": "Young hobbit Frodo Baggins, after inheriting a mysterious ring from his uncle Bilbo, must leave his home in order to keep it from falling into the hands of its evil creator. Along the way, a fellowship is formed to protect the ringbearer and make sure that the ring arrives at its final destination: Mt. Doom, the only place where it can be destroyed.",
+      "poster_path": "/6oom5QYQ2yQTMJIbnvbkBL9cHo6.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        12,
+        14,
+        28
+      ],
+      "popularity": 180.978,
+      "release_date": "2001-12-18",
+      "video": false,
+      "vote_average": 8.416,
+      "vote_count": 25239
+    },
+    {
+      "backdrop_path": "/sjNXaMPWOH47VEtvE77BqUzHatB.jpg",
+      "id": 2649,
+      "title": "The Game",
+      "original_title": "The Game",
+      "overview": "In honor of his birthday, San Francisco banker Nicholas Van Orton, a financial genius and a cold-hearted loner, receives an unusual present from his younger brother, Conrad: a gift certificate to play a unique kind of game. In nary a nanosecond, Nicholas finds himself consumed by a dangerous set of ever-changing rules, unable to distinguish where the charade ends and reality begins.",
+      "poster_path": "/evph7FByd63yCZ42e2YRmIy37uc.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        18,
+        53,
+        9648
+      ],
+      "popularity": 31.278,
+      "release_date": "1997-09-12",
+      "video": false,
+      "vote_average": 7.571,
+      "vote_count": 6546
+    },
+    {
+      "backdrop_path": "/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg",
+      "id": 27205,
+      "title": "Inception",
+      "original_title": "Inception",
+      "overview": "Cobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets is offered a chance to regain his old life as payment for a task considered to be impossible: \"inception\", the implantation of another person's idea into a target's subconscious.",
+      "poster_path": "/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        28,
+        878,
+        12
+      ],
+      "popularity": 122.2,
+      "release_date": "2010-07-15",
+      "video": false,
+      "vote_average": 8.369,
+      "vote_count": 36636
+    },
+    {
+      "backdrop_path": "/uvitbjFU4JqvMwIkMWHp69bmUzG.jpg",
+      "id": 598,
+      "title": "City of God",
+      "original_title": "Cidade de Deus",
+      "overview": "In the poverty-stricken favelas of Rio de Janeiro in the 1970s, two young men choose different paths. Rocket is a budding photographer who documents the increasing drug-related violence of his neighborhood, while José “Zé” Pequeno is an ambitious drug dealer diving into a dangerous life of crime.",
+      "poster_path": "/k7eYdWvhYQyRQoU2TB2A2Xu2TfD.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "pt",
+      "genre_ids": [
+        18,
+        80
+      ],
+      "popularity": 43.676,
+      "release_date": "2002-08-30",
+      "video": false,
+      "vote_average": 8.4,
+      "vote_count": 7400
+    },
+    {
+      "backdrop_path": "/xbk4yCvG9k6Z5gfPqcNM5DG6x3d.jpg",
+      "id": 627,
+      "title": "Trainspotting",
+      "original_title": "Trainspotting",
+      "overview": "Heroin addict Mark Renton stumbles through bad ideas and sobriety attempts with his unreliable friends -- Sick Boy, Begbie, Spud and Tommy. He also has an underage girlfriend, Diane, along for the ride. After cleaning up and moving from Edinburgh to London, Mark finds he can't escape the life he left behind when Begbie shows up at his front door on the lam, and a scheming Sick Boy follows.",
+      "poster_path": "/fCNd4D6I6n1xZKUbZI6Hco28EQ0.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        18,
+        80
+      ],
+      "popularity": 33.347,
+      "release_date": "1996-02-23",
+      "video": false,
+      "vote_average": 8,
+      "vote_count": 9618
+    },
+    {
+      "backdrop_path": "/aJCtkxLLzkk1pECehVjKHA2lBgw.jpg",
+      "id": 1891,
+      "title": "The Empire Strikes Back",
+      "original_title": "The Empire Strikes Back",
+      "overview": "The epic saga continues as Luke Skywalker, in hopes of defeating the evil Galactic Empire, learns the ways of the Jedi from aging master Yoda. But Darth Vader is more determined than ever to capture Luke. Meanwhile, rebel leader Princess Leia, cocky Han Solo, Chewbacca, and droids C-3PO and R2-D2 are thrown into various stages of capture, betrayal and despair.",
+      "poster_path": "/nNAeTmF4CtdSgMDplXTDPOpYzsX.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        12,
+        28,
+        878
+      ],
+      "popularity": 54.448,
+      "release_date": "1980-05-20",
+      "video": false,
+      "vote_average": 8.4,
+      "vote_count": 16958
+    },
+    {
+      "backdrop_path": "/7S7PE3vK9Eh5uzCYBDGk5qTJeYW.jpg",
+      "id": 629,
+      "title": "The Usual Suspects",
+      "original_title": "The Usual Suspects",
+      "overview": "Held in an L.A. interrogation room, Verbal Kint attempts to convince the feds that a mythic crime lord, Keyser Soze, not only exists, but was also responsible for drawing him and his four partners into a multi-million dollar heist that ended with an explosion in San Pedro harbor – leaving few survivors. Verbal lures his interrogators with an incredible story of the crime lord's almost supernatural prowess.",
+      "poster_path": "/rWbsxdwF9qQzpTPCLmDfVnVqTK1.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        18,
+        80,
+        53
+      ],
+      "popularity": 57.797,
+      "release_date": "1995-07-19",
+      "video": false,
+      "vote_average": 8.178,
+      "vote_count": 10374
+    },
+    {
+      "backdrop_path": "/5Lbm0gpFDRAPIV1Cth6ln9iL1ou.jpg",
+      "id": 68718,
+      "title": "Django Unchained",
+      "original_title": "Django Unchained",
+      "overview": "With the help of a German bounty hunter, a freed slave sets out to rescue his wife from a brutal Mississippi plantation owner.",
+      "poster_path": "/7oWY8VDWW7thTzWh3OKYRkWUlD5.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        18,
+        37
+      ],
+      "popularity": 103.622,
+      "release_date": "2012-12-25",
+      "video": false,
+      "vote_average": 8.2,
+      "vote_count": 26237
+    },
+    {
+      "backdrop_path": "/zfbjgQE1uSd9wiPTX4VzsLi0rGG.jpg",
+      "id": 278,
+      "title": "The Shawshank Redemption",
+      "original_title": "The Shawshank Redemption",
+      "overview": "Imprisoned in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.",
+      "poster_path": "/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        18,
+        80
+      ],
+      "popularity": 180.106,
+      "release_date": "1994-09-23",
+      "video": false,
+      "vote_average": 8.7,
+      "vote_count": 27251
+    },
+    {
+      "backdrop_path": "/3TimUBrXMVblpnTsyg4HssGVbBv.jpg",
+      "id": 431,
+      "title": "Cube",
+      "original_title": "Cube",
+      "overview": "A group of strangers find themselves trapped in a maze-like prison. It soon becomes clear that each of them possesses the peculiar skills necessary to escape, if they don't wind up dead first.",
+      "poster_path": "/x4BTjxdrOKC27FcSkBh8KPEgnum.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        53,
+        878,
+        9648
+      ],
+      "popularity": 17.47,
+      "release_date": "1997-12-10",
+      "video": false,
+      "vote_average": 6.808,
+      "vote_count": 4731
+    },
+    {
+      "backdrop_path": "/5JrZAtyk3LwiiAWLW0kwz41XZJC.jpg",
+      "id": 122,
+      "title": "The Lord of the Rings: The Return of the King",
+      "original_title": "The Lord of the Rings: The Return of the King",
+      "overview": "As armies mass for a final battle that will decide the fate of the world--and powerful, ancient forces of Light and Dark compete to determine the outcome--one member of the Fellowship of the Ring is revealed as the noble heir to the throne of the Kings of Men. Yet, the sole hope for triumph over evil lies with a brave hobbit, Frodo, who, accompanied by his loyal friend Sam and the hideous, wretched Gollum, ventures deep into the very dark heart of Mordor on his seemingly impossible quest to destroy the Ring of Power.​",
+      "poster_path": "/rCzpDGLbOoPwLjy3OAm5NUPOTrC.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        12,
+        14,
+        28
+      ],
+      "popularity": 148.848,
+      "release_date": "2003-12-17",
+      "video": false,
+      "vote_average": 8.482,
+      "vote_count": 24279
+    },
+    {
+      "backdrop_path": "/sDTnMOJ3H5wI38OxObmCtK7wfd5.jpg",
+      "id": 585,
+      "title": "Monsters, Inc.",
+      "original_title": "Monsters, Inc.",
+      "overview": "Lovable Sulley and his wisecracking sidekick Mike Wazowski are the top scare team at Monsters, Inc., the scream-processing factory in Monstropolis. When a little girl named Boo wanders into their world, it's the monsters who are scared silly, and it's up to Sulley and Mike to keep her out of sight and get her back home.",
+      "poster_path": "/wFSpyMsp7H0ttERbxY7Trlv8xry.jpg",
+      "media_type": "movie",
+      "adult": false,
+      "original_language": "en",
+      "genre_ids": [
+        16,
+        35,
+        10751
+      ],
+      "popularity": 120.105,
+      "release_date": "2001-11-01",
+      "video": false,
+      "vote_average": 7.845,
+      "vote_count": 18436
+    }
+  ],
+  "total_pages": 2,
+  "total_results": 40
+}
+Fetching popularity for movie ID: 550...
+Movie Popularity: 208.31
+Removing movie with ID: 550 from test_user's watchlist...
+Remove from Watchlist Response:
+{
+  "error": "User 'test_user' not found"
+}
+All tests passed successfully!
