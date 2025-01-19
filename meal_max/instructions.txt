@@ -1,0 +1,4 @@
+1. build docker image
+    sh run_docker.sh 
+
+2. 

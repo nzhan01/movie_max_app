@@ -1,19 +1,15 @@
 from dotenv import load_dotenv
 import os
-from flask import Flask, app, jsonify, make_response, Response, request
+from flask import Flask, app, jsonify, make_response, Response, request, render_template
 from werkzeug.exceptions import BadRequest, Unauthorized
+
 import requests
 
 from utils.logger import configure_logger
 
 # from flask_cors import CORS
 
-"""test commeent  
-dsf
-dsf
 
-dsf
-"""
 from db import db
 from utils.sql_utils import check_database_connection, check_table_exists
 from models.user_model import Users
@@ -25,7 +21,7 @@ load_dotenv()
 TMDB_API_KEY = os.getenv("TMDB_API_KEY")
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static")
 configure_logger(app.logger)
 
 
@@ -48,7 +44,7 @@ BASE_URL = "https://api.themoviedb.org/3"
 ####################################################
 @app.route('/')
 def root():
-    return jsonify({"message": "Welcome to Movie Max"}), 200
+    return render_template("main.html"), 200
 @app.route('/api')
 def api_root():
     return jsonify({"message": "Welcome to Movie Max API!"}), 200

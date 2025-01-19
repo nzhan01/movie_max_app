@@ -37,7 +37,7 @@ class Movie:
         url = f"{BASE_URL}/search/movie"
         headers = {
             "accept": "application/json",
-            "Authorization": f"Bearer {TMDB_READ_ACCESS_TOKEN}"
+            "Authorization": "Bearer " + TMDB_READ_ACCESS_TOKEN
         }
         params = {
             "query": query,
@@ -76,6 +76,7 @@ class Movie:
         """
         logger.info("Fetching watch providers for movie ID: %d", movie_id)
         url = f"{BASE_URL}/movie/{movie_id}/watch/providers"
+        
         headers = {
             "accept": "application/json",
             "Authorization": f"Bearer {TMDB_READ_ACCESS_TOKEN}"
